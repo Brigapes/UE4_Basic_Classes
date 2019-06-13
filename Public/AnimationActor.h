@@ -49,6 +49,8 @@ public:
 		bool StopRunningAnimsOnNewStart = false;
 	UPROPERTY(EditAnywhere, Category = "Animation General")
 		AAnimationController* AnimationController;
+	UPROPERTY(EditAnywhere, Category = "Animation General")
+		bool ForceFinishPosition = false;
 
 	UPROPERTY(EditAnywhere, Category = "Animation 1")
 		TArray<FString> AnimateOnEvent1 = {};
@@ -147,5 +149,9 @@ public:
 	FVector ScalePerStep1;
 	FVector ScalePerStep2;
 	FVector ScalePerStep3;
+
+	int32 totalSteps1 = -1;
+	int32 totalSteps2 = -1;
+	int32 totalSteps3 = -1;
 
 };
