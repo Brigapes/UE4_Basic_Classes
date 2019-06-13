@@ -56,12 +56,33 @@ void AAnimationActor::ProcessAnims() {
 
 			if (MoveLocation1) {
 				FVector newloc = FVector(newt.GetLocation());
-				newloc.X = newloc.X .X;
+				newloc.X = newloc.X + MovePerStep1.X;
+				newloc.Y = newloc.Y + MovePerStep1.Y;
+				newloc.Z = newloc.Z + MovePerStep1.Z;
+				//SetActorLocation(newloc);
+				newt.SetLocation(newloc);
 			}
 
+			if (Rotate1) {
+				FRotator newrot = FRotator(newt.GetRotation());
+				newrot.Pitch = newrot.Pitch + RotatePerStep1.Pitch;
+				newrot.Yaw = newrot.Yaw + RotatePerStep1.Yaw;
+				newrot.Roll = newrot.Roll + RotatePerStep1.Roll;
+				newt.SetRotation(newrot.Quaternion());
+			}
 
+			if (Scale1) {
+				FVector news = FVector(newt.GetScale3D());
+				news.X = news.X + ScalePerStep1.X;
+				news.Y = news.Y + ScalePerStep1.Y;
+				news.Z = news.Z + ScalePerStep1.Z;
+				//SetActorLocation(newloc);
+				newt.SetScale3D(news);
+			}
 
+			//if all is valid apply transform
 
+			SetActorTransform(newt);
 
 			//if not force finish
 			if (totalSteps1 >= AnimationTime1) {
@@ -75,14 +96,140 @@ void AAnimationActor::ProcessAnims() {
 	}
 	//end anim1
 
+		//staret anim2
+	if (pl_2) {
+		totalSteps2++;
+		//finish force
+		if (totalSteps2 >= AnimationTime2 && ForceFinishPosition) {
+			//force all
+			if (MoveLocation2) {
+				this->SetActorLocation(ToTransform2.GetLocation());
+			}
+			if (Rotate2) {
+				this->SetActorRotation(ToTransform2.GetRotation());
+			}
+			if (Scale2) {
+				this->SetActorScale3D(ToTransform2.GetScale3D());
+			}
+			if (EventToTriggerOnFinish2 != "") {
+				SendEventToController(EventToTriggerOnFinish2);
+				StopAnim2();
+			}
+
+		}
+		else { //NOT FINISH
+
+			if (MoveLocation2) {
+				FVector newloc = FVector(newt.GetLocation());
+				newloc.X = newloc.X + MovePerStep2.X;
+				newloc.Y = newloc.Y + MovePerStep2.Y;
+				newloc.Z = newloc.Z + MovePerStep2.Z;
+				//SetActorLocation(newloc);
+				newt.SetLocation(newloc);
+			}
+
+			if (Rotate2) {
+				FRotator newrot = FRotator(newt.GetRotation());
+				newrot.Pitch = newrot.Pitch + RotatePerStep2.Pitch;
+				newrot.Yaw = newrot.Yaw + RotatePerStep2.Yaw;
+				newrot.Roll = newrot.Roll + RotatePerStep2.Roll;
+				newt.SetRotation(newrot.Quaternion());
+			}
+
+			if (Scale2) {
+				FVector news = FVector(newt.GetScale3D());
+				news.X = news.X + ScalePerStep2.X;
+				news.Y = news.Y + ScalePerStep2.Y;
+				news.Z = news.Z + ScalePerStep2.Z;
+				//SetActorLocation(newloc);
+				newt.SetScale3D(news);
+			}
+
+			//if all is valid apply transform
+
+			SetActorTransform(newt);
+
+			//if not force finish
+			if (totalSteps2 >= AnimationTime2) {
+				if (EventToTriggerOnFinish2 != "") {
+					SendEventToController(EventToTriggerOnFinish2);
+					StopAnim2();
+				}
+			}
+
+		}
+	}
+	//end anim2
+
+		//staret anim3
+	if (pl_3) {
+		totalSteps3++;
+		//finish force
+		if (totalSteps3 >= AnimationTime3 && ForceFinishPosition) {
+			//force all
+			if (MoveLocation3) {
+				this->SetActorLocation(ToTransform3.GetLocation());
+			}
+			if (Rotate3) {
+				this->SetActorRotation(ToTransform3.GetRotation());
+			}
+			if (Scale3) {
+				this->SetActorScale3D(ToTransform3.GetScale3D());
+			}
+			if (EventToTriggerOnFinish3 != "") {
+				SendEventToController(EventToTriggerOnFinish3);
+				StopAnim3();
+			}
+
+		}
+		else { //NOT FINISH
+
+			if (MoveLocation3) {
+				FVector newloc = FVector(newt.GetLocation());
+				newloc.X = newloc.X + MovePerStep3.X;
+				newloc.Y = newloc.Y + MovePerStep3.Y;
+				newloc.Z = newloc.Z + MovePerStep3.Z;
+				//SetActorLocation(newloc);
+				newt.SetLocation(newloc);
+			}
+
+			if (Rotate3) {
+				FRotator newrot = FRotator(newt.GetRotation());
+				newrot.Pitch = newrot.Pitch + RotatePerStep3.Pitch;
+				newrot.Yaw = newrot.Yaw + RotatePerStep3.Yaw;
+				newrot.Roll = newrot.Roll + RotatePerStep3.Roll;
+				newt.SetRotation(newrot.Quaternion());
+			}
+
+			if (Scale3) {
+				FVector news = FVector(newt.GetScale3D());
+				news.X = news.X + ScalePerStep3.X;
+				news.Y = news.Y + ScalePerStep3.Y;
+				news.Z = news.Z + ScalePerStep3.Z;
+				//SetActorLocation(newloc);
+				newt.SetScale3D(news);
+			}
+
+			//if all is valid apply transform
+
+			SetActorTransform(newt);
+
+			//if not force finish
+			if (totalSteps3 >= AnimationTime3) {
+				if (EventToTriggerOnFinish3 != "") {
+					SendEventToController(EventToTriggerOnFinish3);
+					StopAnim3();
+				}
+			}
+
+		}
+	}
+	//end anim3
 
 
 
 
-
-
-
-
+	//all done
 
 
 
