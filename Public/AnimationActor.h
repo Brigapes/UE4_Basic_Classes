@@ -83,7 +83,7 @@ public:
 		bool MoveLocation2 = false;
 	UPROPERTY(EditAnywhere, Category = "Animation 2")
 		bool Rotate2 = false;
-	UPROPERTY(EditAnywhere, Category = "Animation 1")
+	UPROPERTY(EditAnywhere, Category = "Animation 2")
 		bool Scale2 = false;
 	UPROPERTY(EditAnywhere, Category = "Animation 2")
 		FTransform ToTransform2;
@@ -104,7 +104,7 @@ public:
 		bool MoveLocation3 = false;
 	UPROPERTY(EditAnywhere, Category = "Animation 3")
 		bool Rotate3 = false;
-	UPROPERTY(EditAnywhere, Category = "Animation 1")
+	UPROPERTY(EditAnywhere, Category = "Animation 3")
 		bool Scale3 = false;
 	UPROPERTY(EditAnywhere, Category = "Animation 3")
 		FTransform ToTransform3;

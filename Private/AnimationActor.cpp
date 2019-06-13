@@ -48,8 +48,8 @@ void AAnimationActor::ProcessAnims() {
 			}
 			if (EventToTriggerOnFinish1 != "") {
 				SendEventToController(EventToTriggerOnFinish1);
-				StopAnim1();
 			}
+			StopAnim1();
 
 		}
 		else { //NOT FINISH
@@ -88,8 +88,8 @@ void AAnimationActor::ProcessAnims() {
 			if (totalSteps1 >= AnimationTime1) {
 				if (EventToTriggerOnFinish1 != "") {
 					SendEventToController(EventToTriggerOnFinish1);
-					StopAnim1();
 				}
+				StopAnim1();
 			}
 
 		}
@@ -113,8 +113,8 @@ void AAnimationActor::ProcessAnims() {
 			}
 			if (EventToTriggerOnFinish2 != "") {
 				SendEventToController(EventToTriggerOnFinish2);
-				StopAnim2();
 			}
+			StopAnim2();
 
 		}
 		else { //NOT FINISH
@@ -152,9 +152,9 @@ void AAnimationActor::ProcessAnims() {
 			//if not force finish
 			if (totalSteps2 >= AnimationTime2) {
 				if (EventToTriggerOnFinish2 != "") {
-					SendEventToController(EventToTriggerOnFinish2);
-					StopAnim2();
+					SendEventToController(EventToTriggerOnFinish2);	
 				}
+				StopAnim2();
 			}
 
 		}
@@ -178,8 +178,8 @@ void AAnimationActor::ProcessAnims() {
 			}
 			if (EventToTriggerOnFinish3 != "") {
 				SendEventToController(EventToTriggerOnFinish3);
-				StopAnim3();
 			}
+			StopAnim3();
 
 		}
 		else { //NOT FINISH
@@ -217,9 +217,9 @@ void AAnimationActor::ProcessAnims() {
 			//if not force finish
 			if (totalSteps3 >= AnimationTime3) {
 				if (EventToTriggerOnFinish3 != "") {
-					SendEventToController(EventToTriggerOnFinish3);
-					StopAnim3();
+					SendEventToController(EventToTriggerOnFinish3);	
 				}
+				StopAnim3();
 			}
 
 		}
@@ -267,6 +267,7 @@ void AAnimationActor::StopAllAnims() {
 
 
 void AAnimationActor::StartAnim1() { 
+	if (pl_1) { return; }
 	FTransform crr = this->GetTransform();
 	double atime = AnimationTime1;
 	if (atime == 0) { atime = 1; }
@@ -313,6 +314,7 @@ void AAnimationActor::StartAnim1() {
 	totalSteps1 = 0;
 }
 void AAnimationActor::StartAnim2() {
+	if (pl_2) { return; }
 	FTransform crr = this->GetTransform();
 	double atime = AnimationTime2;
 	if (atime == 0) { atime = 1; }
@@ -359,6 +361,7 @@ void AAnimationActor::StartAnim2() {
 	totalSteps2 = 0;
 }
 void AAnimationActor::StartAnim3() {
+	if (pl_3) { return; }
 	FTransform crr = this->GetTransform();
 	double atime = AnimationTime3;
 	if (atime == 0) { atime = 1; }

@@ -29,7 +29,7 @@ void AAnimationController::Tick(float DeltaTime)
 void AAnimationController::RecieveEvent(FString event) {
 
 	for (auto& actor : AnimationActors) {
-		
+		actor->processEvent(event);
 	}
 
 
