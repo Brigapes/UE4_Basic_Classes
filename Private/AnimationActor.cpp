@@ -49,7 +49,7 @@ void AAnimationActor::ProcessAnims() {
 			if (EventToTriggerOnFinish1 != "") {
 				SendEventToController(EventToTriggerOnFinish1);
 			}
-			StopAnim1();
+			StopAnim1(true, pl_1);
 
 		}
 		else { //NOT FINISH
@@ -89,7 +89,7 @@ void AAnimationActor::ProcessAnims() {
 				if (EventToTriggerOnFinish1 != "") {
 					SendEventToController(EventToTriggerOnFinish1);
 				}
-				StopAnim1();
+				StopAnim1(true, pl_1);
 			}
 
 		}
@@ -114,7 +114,7 @@ void AAnimationActor::ProcessAnims() {
 			if (EventToTriggerOnFinish2 != "") {
 				SendEventToController(EventToTriggerOnFinish2);
 			}
-			StopAnim2();
+			StopAnim2(true,pl_2);
 
 		}
 		else { //NOT FINISH
@@ -154,7 +154,7 @@ void AAnimationActor::ProcessAnims() {
 				if (EventToTriggerOnFinish2 != "") {
 					SendEventToController(EventToTriggerOnFinish2);	
 				}
-				StopAnim2();
+				StopAnim2(true, pl_2);
 			}
 
 		}
@@ -179,7 +179,7 @@ void AAnimationActor::ProcessAnims() {
 			if (EventToTriggerOnFinish3 != "") {
 				SendEventToController(EventToTriggerOnFinish3);
 			}
-			StopAnim3();
+			StopAnim3(true, pl_3);
 
 		}
 		else { //NOT FINISH
@@ -219,7 +219,7 @@ void AAnimationActor::ProcessAnims() {
 				if (EventToTriggerOnFinish3 != "") {
 					SendEventToController(EventToTriggerOnFinish3);	
 				}
-				StopAnim3();
+				StopAnim3(true, pl_3);
 			}
 
 		}
@@ -260,9 +260,22 @@ void AAnimationActor::SendEventToController(FString eventname) {
 
 ///simple made
 void AAnimationActor::StopAllAnims() { 
-	StopAnim1();
-	StopAnim2();
-	StopAnim3();
+	auto buf1 = pl_1;
+	auto buf2 = pl_2;
+	auto buf3 = pl_3;
+
+
+	pl_1 = false;
+	totalSteps1 = -1;
+	pl_2 = false;
+	totalSteps2 = -1;
+	pl_3 = false;
+	totalSteps3 = -1;
+
+	StopAnim1(false, buf1);
+	StopAnim2(false, buf2);
+	StopAnim3(false, buf3);
+	
 }
 
 
@@ -408,25 +421,49 @@ void AAnimationActor::StartAnim3() {
 	totalSteps3 = 0;
 }
 
-void AAnimationActor::StopAnim1() {
-	pl_1 = false; 
-	totalSteps1 = -1;
-	if (EventToTriggerOnStop1 != "") {
-		processEvent(EventToTriggerOnStop1);
+void AAnimationActor::StopAnim1(bool force, bool org) {
+	if (force) {
+		pl_1 = false;
+		totalSteps1 = -1;
+		if (EventToTriggerOnStop1 != "" && org == true) {
+			processEvent(EventToTriggerOnStop1);
+		}
+
+	}
+	else {
+		if (EventToTriggerOnStop2 != "" && org == true) {
+			processEvent(EventToTriggerOnStop2);
+		}
 	}
 }
-void AAnimationActor::StopAnim2(){
-	pl_2 = false;
-	totalSteps2 = -1;
-	if (EventToTriggerOnStop2 != "") {
-		processEvent(EventToTriggerOnStop2);
+void AAnimationActor::StopAnim2(bool force, bool org){
+	if (force) {
+		pl_2 = false;
+		totalSteps2 = -1;
+		if (EventToTriggerOnStop2 != "" && org == true) {
+			processEvent(EventToTriggerOnStop2);
+		}
+
+	}
+	else {
+		if (EventToTriggerOnStop2 != "" && org == true) {
+			processEvent(EventToTriggerOnStop2);
+		}
 	}
 }
-void AAnimationActor::StopAnim3(){
-	pl_3 = false;
-	totalSteps3 = -1;
-	if (EventToTriggerOnStop3 != "") {
-		processEvent(EventToTriggerOnStop3);
+void AAnimationActor::StopAnim3(bool force, bool org){
+	if (force) {
+		pl_3 = false;
+		totalSteps2 = -1;
+		if (EventToTriggerOnStop3 != "" && org == true) {
+			processEvent(EventToTriggerOnStop3);
+		}
+
+	}
+	else {
+		if (EventToTriggerOnStop3 != "" && org == true) {
+			processEvent(EventToTriggerOnStop3);
+		}
 	}
 }
 
@@ -465,11 +502,11 @@ void AAnimationActor::processEvent(FString eventname) {
 	}
 
 	if (eventname == StopEvent1) {
-		StopAnim1();
+		StopAnim1(true,pl_1);
 	}if (eventname == StopEvent2) {
-		StopAnim2();
+		StopAnim2(true,pl_2);
 	}if (eventname == StopEvent3) {
-		StopAnim3();
+		StopAnim3(true,pl_3);
 	}
 
 }

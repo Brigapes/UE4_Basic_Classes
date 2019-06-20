@@ -70,7 +70,7 @@ public:
 //		class UCapsuleComponent* TriggerCapsule;
 
 	UPROPERTY(EditAnywhere, Category = "Animation")
-		bool AnimateActors = false; //special case
+		bool AnimateActors = true; //special case
 	UPROPERTY(EditAnywhere, Category = "Animation")
 		bool SendEventOnTrigger = false; //special case
 	UPROPERTY(EditAnywhere, Category = "Animation")

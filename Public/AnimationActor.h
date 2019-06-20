@@ -132,9 +132,9 @@ public:
 	void StartAnim2();
 	void StartAnim3();
 
-	void StopAnim1();
-	void StopAnim2();
-	void StopAnim3();
+	void StopAnim1(bool, bool);
+	void StopAnim2(bool, bool);
+	void StopAnim3(bool, bool);
 
 	void ProcessAnims();
 
