@@ -51,6 +51,8 @@ public:
 		AAnimationController* AnimationController;
 	UPROPERTY(EditAnywhere, Category = "Animation General")
 		bool ForceFinishPosition = false;
+	UPROPERTY(EditAnywhere, Category = "Animation General")
+		AActor* PassAnimToActor = nullptr;
 
 	UPROPERTY(EditAnywhere, Category = "Animation 1")
 		TArray<FString> AnimateOnEvent1 = {};

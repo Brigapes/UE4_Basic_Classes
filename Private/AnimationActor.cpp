@@ -28,8 +28,19 @@ void AAnimationActor::BeginPlay()
 
 ///done every frame
 void AAnimationActor::ProcessAnims() {
+
 	FTransform crr = this->GetTransform();
 	FTransform newt = this->GetTransform();
+
+	if (PassAnimToActor) {
+		crr = PassAnimToActor->GetTransform();
+		newt = PassAnimToActor->GetTransform();
+	}
+	else {
+		crr = this->GetTransform();
+		newt = this->GetTransform();
+	}
+
 
 	//staret anim1
 	if (pl_1) {
@@ -38,13 +49,24 @@ void AAnimationActor::ProcessAnims() {
 		if (totalSteps1 >= AnimationTime1 && ForceFinishPosition) {
 			//force all
 			if(MoveLocation1){
-				this->SetActorLocation(ToTransform1.GetLocation());
+				if (PassAnimToActor) {
+					PassAnimToActor->SetActorLocation(ToTransform1.GetLocation());
+				}
+				else {
+					this->SetActorLocation(ToTransform1.GetLocation());
+				}
 			}
 			if (Rotate1) {
-				this->SetActorRotation(ToTransform1.GetRotation());
+				if (PassAnimToActor) {
+					PassAnimToActor->SetActorRotation(ToTransform1.GetRotation());
+				}
+				else this->SetActorRotation(ToTransform1.GetRotation());
 			}
 			if (Scale1) {
-				this->SetActorScale3D(ToTransform1.GetScale3D());
+				if (PassAnimToActor) {
+					PassAnimToActor->SetActorScale3D(ToTransform1.GetScale3D());
+				}
+				else this->SetActorScale3D(ToTransform1.GetScale3D());
 			}
 			if (EventToTriggerOnFinish1 != "") {
 				SendEventToController(EventToTriggerOnFinish1);
@@ -81,8 +103,10 @@ void AAnimationActor::ProcessAnims() {
 			}
 
 			//if all is valid apply transform
-
-			SetActorTransform(newt);
+			if (PassAnimToActor) {
+				PassAnimToActor->SetActorTransform(newt);
+			}
+			else this->SetActorTransform(newt);
 
 			//if not force finish
 			if (totalSteps1 >= AnimationTime1) {
@@ -103,13 +127,22 @@ void AAnimationActor::ProcessAnims() {
 		if (totalSteps2 >= AnimationTime2 && ForceFinishPosition) {
 			//force all
 			if (MoveLocation2) {
-				this->SetActorLocation(ToTransform2.GetLocation());
+				if (PassAnimToActor) {
+					PassAnimToActor->SetActorLocation(ToTransform2.GetLocation());
+				}
+				else this->SetActorLocation(ToTransform2.GetLocation());
 			}
 			if (Rotate2) {
-				this->SetActorRotation(ToTransform2.GetRotation());
+				if (PassAnimToActor) {
+					PassAnimToActor->SetActorRotation(ToTransform2.GetRotation());
+				}
+				else this->SetActorRotation(ToTransform2.GetRotation());
 			}
 			if (Scale2) {
-				this->SetActorScale3D(ToTransform2.GetScale3D());
+				if (PassAnimToActor) {
+					PassAnimToActor->SetActorScale3D(ToTransform2.GetScale3D());
+				}
+				else this->SetActorScale3D(ToTransform2.GetScale3D());
 			}
 			if (EventToTriggerOnFinish2 != "") {
 				SendEventToController(EventToTriggerOnFinish2);
@@ -146,8 +179,10 @@ void AAnimationActor::ProcessAnims() {
 			}
 
 			//if all is valid apply transform
-
-			SetActorTransform(newt);
+			if (PassAnimToActor) {
+				PassAnimToActor->SetActorTransform(newt);
+			}
+			else this->SetActorTransform(newt);
 
 			//if not force finish
 			if (totalSteps2 >= AnimationTime2) {
@@ -168,13 +203,22 @@ void AAnimationActor::ProcessAnims() {
 		if (totalSteps3 >= AnimationTime3 && ForceFinishPosition) {
 			//force all
 			if (MoveLocation3) {
-				this->SetActorLocation(ToTransform3.GetLocation());
+				if (PassAnimToActor) {
+					PassAnimToActor->SetActorLocation(ToTransform3.GetLocation());
+				}
+				else this->SetActorLocation(ToTransform3.GetLocation());
 			}
 			if (Rotate3) {
-				this->SetActorRotation(ToTransform3.GetRotation());
+				if (PassAnimToActor) {
+					PassAnimToActor->SetActorRotation(ToTransform3.GetRotation());
+				}
+				else this->SetActorRotation(ToTransform3.GetRotation());
 			}
 			if (Scale3) {
-				this->SetActorScale3D(ToTransform3.GetScale3D());
+				if (PassAnimToActor) {
+					PassAnimToActor->SetActorScale3D(ToTransform3.GetScale3D());
+				}
+				else this->SetActorScale3D(ToTransform3.GetScale3D());
 			}
 			if (EventToTriggerOnFinish3 != "") {
 				SendEventToController(EventToTriggerOnFinish3);
@@ -211,8 +255,10 @@ void AAnimationActor::ProcessAnims() {
 			}
 
 			//if all is valid apply transform
-
-			SetActorTransform(newt);
+			if (PassAnimToActor) {
+				PassAnimToActor->SetActorTransform(newt);
+			}
+			else this->SetActorTransform(newt);
 
 			//if not force finish
 			if (totalSteps3 >= AnimationTime3) {
@@ -282,6 +328,9 @@ void AAnimationActor::StopAllAnims() {
 void AAnimationActor::StartAnim1() { 
 	if (pl_1) { return; }
 	FTransform crr = this->GetTransform();
+	if (PassAnimToActor) {
+		crr = PassAnimToActor->GetTransform();
+	}
 	double atime = AnimationTime1;
 	if (atime == 0) { atime = 1; }
 	if (MoveLocation1) {
@@ -329,6 +378,9 @@ void AAnimationActor::StartAnim1() {
 void AAnimationActor::StartAnim2() {
 	if (pl_2) { return; }
 	FTransform crr = this->GetTransform();
+	if (PassAnimToActor) {
+		crr = PassAnimToActor->GetTransform();
+	}
 	double atime = AnimationTime2;
 	if (atime == 0) { atime = 1; }
 	if (MoveLocation2) {
@@ -376,6 +428,9 @@ void AAnimationActor::StartAnim2() {
 void AAnimationActor::StartAnim3() {
 	if (pl_3) { return; }
 	FTransform crr = this->GetTransform();
+	if (PassAnimToActor) {
+		crr = PassAnimToActor->GetTransform();
+	}
 	double atime = AnimationTime3;
 	if (atime == 0) { atime = 1; }
 	if (MoveLocation3) {
