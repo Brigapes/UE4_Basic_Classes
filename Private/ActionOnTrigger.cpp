@@ -55,7 +55,7 @@ void AActionOnTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AActo
 			if (AnimateActors) {
 				if (SendEventOnTrigger) {
 					if (AnimationControllerToSendEvents) {
-						AnimationControllerToSendEvents->RecieveEvent(EventName);
+						AnimationControllerToSendEvents->RecieveEvent(EventNameForTrigger);
 					}
 				}
 
@@ -85,18 +85,17 @@ void AActionOnTrigger::OnOverlapEnd(class AActor* OverlappedActor, class AActor*
 			}
 
 
-			if (AnimateActors) {
-				if (SendEventOnLeave) {
-					if (AnimationControllerToSendEvents) {
-						AnimationControllerToSendEvents->RecieveEvent(EventName);
-					}
+			
+		}
+		if (AnimateActors) {
+			if (SendEventOnLeave) {
+				if (AnimationControllerToSendEvents) {
+					AnimationControllerToSendEvents->RecieveEvent(EventNameForLeave);
 				}
 			}
-
-
-
-
 		}
+
+
 	}
 }
 

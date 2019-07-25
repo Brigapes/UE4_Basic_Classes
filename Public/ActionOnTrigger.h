@@ -45,7 +45,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Custom setup")
 		AAnimationController* AnimationControllerToSendEvents = nullptr;
 	UPROPERTY(EditAnywhere, Category = "Custom setup")
-		FString EventName = "";
+		FString EventNameForTrigger = "";
+	UPROPERTY(EditAnywhere, Category = "Custom setup")
+		FString EventNameForLeave = "";
 
 ///	UPROPERTY(EditAnywhere, Category = "Custom setup")
 ///		TArray<AActor*> AnimationActors = {};
@@ -68,7 +70,8 @@ public:
 	// create trigger capsule
 //	UPROPERTY(VisibleAnywhere, Category = "Trigger Capsule")
 //		class UCapsuleComponent* TriggerCapsule;
-
+	
+	//SEND EVENT IN GENERAL
 	UPROPERTY(EditAnywhere, Category = "Animation")
 		bool AnimateActors = true; //special case
 	UPROPERTY(EditAnywhere, Category = "Animation")
