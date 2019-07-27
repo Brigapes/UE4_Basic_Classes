@@ -35,4 +35,20 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Animation Actors")
 		TArray<AAnimationActor*> AnimationActors = {};
 
+	
+	//UPROPERTY(EditAnywhere, Category = "Lock 1")
+	//	bool ShouldLock1BeTrue = false;
+	UPROPERTY(EditAnywhere, Category = "Lock 1")
+		FString EventToUnlockLock1 = "";
+	bool lock1 = false;
+
+	UPROPERTY(EditAnywhere, Category = "Lock 2")
+		FString EventToUnlockLock2 = "";
+	bool lock2 = false;
+
+	UPROPERTY(EditAnywhere, Category = "Lock 3")
+		FString EventToUnlockLock3 = "";
+	bool lock3 = false;
+
+
 };

@@ -54,6 +54,20 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Animation General")
 		AActor* PassAnimToActor = nullptr;
 
+	UPROPERTY(EditAnywhere, Category = "Locks")
+		bool IgnoreAllLocks = true;
+	UPROPERTY(EditAnywhere, Category = "Locks")
+		bool IgnoreLocksForLoad = true;
+	UPROPERTY(EditAnywhere, Category = "Locks")
+		bool IgnoreLockForLoad = false;
+	UPROPERTY(EditAnywhere, Category = "Locks")
+		bool ShouldLock1BeTrue = false;
+	UPROPERTY(EditAnywhere, Category = "Locks")
+		bool ShouldLock2BeTrue = false;
+	UPROPERTY(EditAnywhere, Category = "Locks")
+		bool ShouldLock3BeTrue = false;
+
+
 	UPROPERTY(EditAnywhere, Category = "Animation 1")
 		TArray<FString> AnimateOnEvent1 = {};
 	///animation time in frames

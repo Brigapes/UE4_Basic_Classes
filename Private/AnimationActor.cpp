@@ -520,6 +520,52 @@ void AAnimationActor::StopAnim3(bool force, bool org){
 
 
 void AAnimationActor::processEvent(FString eventname) {
+	
+	bool skipLockCheck = false;
+
+	if (!IgnoreAllLocks) {
+		if (!AnimationController) {
+			UE_LOG(LogTemp, Error, TEXT("ANIMATION ACTOR HAS NO ANIMATION CONTROLLER ASSIGNED!"));
+			return;
+		}
+
+		if (IgnoreLocksForLoad) {
+			if (eventname == "onload" || eventname == "load" || eventname == "on_load") {
+				//is ok
+				skipLockCheck = true;
+			}
+		}
+
+		if (!skipLockCheck) {
+
+			if (ShouldLock1BeTrue) {
+				//check locks!
+				if (AnimationController->lock1) {
+					//ok
+				}
+				else {
+					//is still locked
+					return;
+				}
+			}
+			if (ShouldLock2BeTrue) {
+				if (AnimationController->lock2 == false) {
+					//is still locked
+					return;
+				}
+			}
+			if (ShouldLock3BeTrue) {
+				if (AnimationController->lock3 == false) {
+					//is still locked
+					return;
+				}
+			}
+
+		}
+
+	}
+
+
 
 	//anim1
 	for (auto& ev : StopAllAnimationOnEvents) {
