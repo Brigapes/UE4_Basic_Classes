@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "AnimationActor.h"
+#include "AnimAdd.h"
 
 #include "AnimationController.generated.h"
 
@@ -28,6 +29,9 @@ public:
 
 	void RecieveEvent(FString event);
 
+	UPROPERTY(EditAnywhere, Category = "Animation Actors")
+		TArray<AActor*> AnimationComponents = {};
+		//TArray<UAnimAdd*> AnimationComponents = {};
 	UPROPERTY(EditAnywhere, Category = "Animation Actors")
 		TArray<AAnimationActor*> AnimationActors = {};
 

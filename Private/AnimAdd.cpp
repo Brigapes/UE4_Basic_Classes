@@ -1,38 +1,61 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AnimationActor.h"
+#include "AnimAdd.h"
 #include "AnimationController.h"
 
-
-// Sets default values
-AAnimationActor::AAnimationActor()
+// Sets default values for this component's properties
+UAnimAdd::UAnimAdd()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
+	//PrimaryComponentTick.bCanEverTick = true;
 
+	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bStartWithTickEnabled = true;
+
+	// ...
 }
 
-// Called when the game starts or when spawned
-void AAnimationActor::BeginPlay()
-{
-	Super::BeginPlay();
 
+// Called when the game starts
+void UAnimAdd::BeginPlay()
+{
+	//Super::BeginPlay();
+
+	PassAnimToActor = this->GetOwner();
+	RegisterComponent();
+	// ...
+	
 }
+
+
+// Called every frame
+
+
+void UAnimAdd::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	 //...
+	ProcessAnims();
+}
+
+
 
 ///done every frame
-void AAnimationActor::ProcessAnims() {
+void UAnimAdd::ProcessAnims() {
 
-	FTransform crr = this->GetTransform();
-	FTransform newt = this->GetTransform();
+	FTransform crr = this->PassAnimToActor->GetTransform();
+	FTransform newt = this->PassAnimToActor->GetTransform();
 
 	if (PassAnimToActor) {
 		crr = PassAnimToActor->GetTransform();
 		newt = PassAnimToActor->GetTransform();
 	}
 	else {
-		crr = this->GetTransform();
-		newt = this->GetTransform();
+		crr = this->PassAnimToActor->GetTransform();
+		newt = this->PassAnimToActor->GetTransform();
 	}
 
 
@@ -42,25 +65,25 @@ void AAnimationActor::ProcessAnims() {
 		//finish force
 		if (totalSteps1 >= AnimationTime1 && ForceFinishPosition) {
 			//force all
-			if(MoveLocation1){
+			if (MoveLocation1) {
 				if (PassAnimToActor) {
 					PassAnimToActor->SetActorLocation(ToTransform1.GetLocation());
 				}
 				else {
-					this->SetActorLocation(ToTransform1.GetLocation());
+					this->PassAnimToActor->SetActorLocation(ToTransform1.GetLocation());
 				}
 			}
 			if (Rotate1) {
 				if (PassAnimToActor) {
 					PassAnimToActor->SetActorRotation(ToTransform1.GetRotation());
 				}
-				else this->SetActorRotation(ToTransform1.GetRotation());
+				else this->PassAnimToActor->SetActorRotation(ToTransform1.GetRotation());
 			}
 			if (Scale1) {
 				if (PassAnimToActor) {
 					PassAnimToActor->SetActorScale3D(ToTransform1.GetScale3D());
 				}
-				else this->SetActorScale3D(ToTransform1.GetScale3D());
+				else this->PassAnimToActor->SetActorScale3D(ToTransform1.GetScale3D());
 			}
 			if (EventToTriggerOnFinish1 != "") {
 				SendEventToController(EventToTriggerOnFinish1);
@@ -100,7 +123,7 @@ void AAnimationActor::ProcessAnims() {
 			if (PassAnimToActor) {
 				PassAnimToActor->SetActorTransform(newt);
 			}
-			else this->SetActorTransform(newt);
+			else this->PassAnimToActor->SetActorTransform(newt);
 
 			//if not force finish
 			if (totalSteps1 >= AnimationTime1) {
@@ -124,24 +147,24 @@ void AAnimationActor::ProcessAnims() {
 				if (PassAnimToActor) {
 					PassAnimToActor->SetActorLocation(ToTransform2.GetLocation());
 				}
-				else this->SetActorLocation(ToTransform2.GetLocation());
+				else this->PassAnimToActor->SetActorLocation(ToTransform2.GetLocation());
 			}
 			if (Rotate2) {
 				if (PassAnimToActor) {
 					PassAnimToActor->SetActorRotation(ToTransform2.GetRotation());
 				}
-				else this->SetActorRotation(ToTransform2.GetRotation());
+				else this->PassAnimToActor->SetActorRotation(ToTransform2.GetRotation());
 			}
 			if (Scale2) {
 				if (PassAnimToActor) {
 					PassAnimToActor->SetActorScale3D(ToTransform2.GetScale3D());
 				}
-				else this->SetActorScale3D(ToTransform2.GetScale3D());
+				else this->PassAnimToActor->SetActorScale3D(ToTransform2.GetScale3D());
 			}
 			if (EventToTriggerOnFinish2 != "") {
 				SendEventToController(EventToTriggerOnFinish2);
 			}
-			StopAnim2(true,pl_2);
+			StopAnim2(true, pl_2);
 
 		}
 		else { //NOT FINISH
@@ -176,12 +199,12 @@ void AAnimationActor::ProcessAnims() {
 			if (PassAnimToActor) {
 				PassAnimToActor->SetActorTransform(newt);
 			}
-			else this->SetActorTransform(newt);
+			else this->PassAnimToActor->SetActorTransform(newt);
 
 			//if not force finish
 			if (totalSteps2 >= AnimationTime2) {
 				if (EventToTriggerOnFinish2 != "") {
-					SendEventToController(EventToTriggerOnFinish2);	
+					SendEventToController(EventToTriggerOnFinish2);
 				}
 				StopAnim2(true, pl_2);
 			}
@@ -200,19 +223,19 @@ void AAnimationActor::ProcessAnims() {
 				if (PassAnimToActor) {
 					PassAnimToActor->SetActorLocation(ToTransform3.GetLocation());
 				}
-				else this->SetActorLocation(ToTransform3.GetLocation());
+				else this->PassAnimToActor->SetActorLocation(ToTransform3.GetLocation());
 			}
 			if (Rotate3) {
 				if (PassAnimToActor) {
 					PassAnimToActor->SetActorRotation(ToTransform3.GetRotation());
 				}
-				else this->SetActorRotation(ToTransform3.GetRotation());
+				else this->PassAnimToActor->SetActorRotation(ToTransform3.GetRotation());
 			}
 			if (Scale3) {
 				if (PassAnimToActor) {
 					PassAnimToActor->SetActorScale3D(ToTransform3.GetScale3D());
 				}
-				else this->SetActorScale3D(ToTransform3.GetScale3D());
+				else this->PassAnimToActor->SetActorScale3D(ToTransform3.GetScale3D());
 			}
 			if (EventToTriggerOnFinish3 != "") {
 				SendEventToController(EventToTriggerOnFinish3);
@@ -252,12 +275,12 @@ void AAnimationActor::ProcessAnims() {
 			if (PassAnimToActor) {
 				PassAnimToActor->SetActorTransform(newt);
 			}
-			else this->SetActorTransform(newt);
+			else this->PassAnimToActor->SetActorTransform(newt);
 
 			//if not force finish
 			if (totalSteps3 >= AnimationTime3) {
 				if (EventToTriggerOnFinish3 != "") {
-					SendEventToController(EventToTriggerOnFinish3);	
+					SendEventToController(EventToTriggerOnFinish3);
 				}
 				StopAnim3(true, pl_3);
 			}
@@ -283,15 +306,16 @@ void AAnimationActor::ProcessAnims() {
 
 
 // Called every frame
-void AAnimationActor::Tick(float DeltaTime)
+/*void UAnimAdd::Tick(float DeltaTime)
 {
+
 	Super::Tick(DeltaTime);
 
 	ProcessAnims();
 
-}
+}*/
 
-void AAnimationActor::SendEventToController(FString eventname) {
+void UAnimAdd::SendEventToController(FString eventname) {
 	if (AnimationController) {
 		AnimationController->RecieveEvent(eventname);
 	}
@@ -299,7 +323,7 @@ void AAnimationActor::SendEventToController(FString eventname) {
 
 
 ///simple made
-void AAnimationActor::StopAllAnims() { 
+void UAnimAdd::StopAllAnims() {
 	auto buf1 = pl_1;
 	auto buf2 = pl_2;
 	auto buf3 = pl_3;
@@ -315,13 +339,13 @@ void AAnimationActor::StopAllAnims() {
 	StopAnim1(false, buf1);
 	StopAnim2(false, buf2);
 	StopAnim3(false, buf3);
-	
+
 }
 
 
-void AAnimationActor::StartAnim1() { 
+void UAnimAdd::StartAnim1() {
 	if (pl_1) { return; }
-	FTransform crr = this->GetTransform();
+	FTransform crr = this->PassAnimToActor->GetTransform();
 	if (PassAnimToActor) {
 		crr = PassAnimToActor->GetTransform();
 	}
@@ -369,9 +393,9 @@ void AAnimationActor::StartAnim1() {
 	pl_1 = true;
 	totalSteps1 = 0;
 }
-void AAnimationActor::StartAnim2() {
+void UAnimAdd::StartAnim2() {
 	if (pl_2) { return; }
-	FTransform crr = this->GetTransform();
+	FTransform crr = this->PassAnimToActor->GetTransform();
 	if (PassAnimToActor) {
 		crr = PassAnimToActor->GetTransform();
 	}
@@ -419,9 +443,9 @@ void AAnimationActor::StartAnim2() {
 	pl_2 = true;
 	totalSteps2 = 0;
 }
-void AAnimationActor::StartAnim3() {
+void UAnimAdd::StartAnim3() {
 	if (pl_3) { return; }
-	FTransform crr = this->GetTransform();
+	FTransform crr = this->PassAnimToActor->GetTransform();
 	if (PassAnimToActor) {
 		crr = PassAnimToActor->GetTransform();
 	}
@@ -470,7 +494,7 @@ void AAnimationActor::StartAnim3() {
 	totalSteps3 = 0;
 }
 
-void AAnimationActor::StopAnim1(bool force, bool org) {
+void UAnimAdd::StopAnim1(bool force, bool org) {
 	if (force) {
 		pl_1 = false;
 		totalSteps1 = -1;
@@ -485,7 +509,7 @@ void AAnimationActor::StopAnim1(bool force, bool org) {
 		}
 	}
 }
-void AAnimationActor::StopAnim2(bool force, bool org){
+void UAnimAdd::StopAnim2(bool force, bool org) {
 	if (force) {
 		pl_2 = false;
 		totalSteps2 = -1;
@@ -500,7 +524,7 @@ void AAnimationActor::StopAnim2(bool force, bool org){
 		}
 	}
 }
-void AAnimationActor::StopAnim3(bool force, bool org){
+void UAnimAdd::StopAnim3(bool force, bool org) {
 	if (force) {
 		pl_3 = false;
 		totalSteps2 = -1;
@@ -519,7 +543,7 @@ void AAnimationActor::StopAnim3(bool force, bool org){
 
 
 
-void AAnimationActor::processEvent(FString eventname) {
+void UAnimAdd::processEvent(FString eventname) {
 
 	//anim1
 	for (auto& ev : StopAllAnimationOnEvents) {
@@ -551,11 +575,11 @@ void AAnimationActor::processEvent(FString eventname) {
 	}
 
 	if (eventname == StopEvent1) {
-		StopAnim1(true,pl_1);
+		StopAnim1(true, pl_1);
 	}if (eventname == StopEvent2) {
-		StopAnim2(true,pl_2);
+		StopAnim2(true, pl_2);
 	}if (eventname == StopEvent3) {
-		StopAnim3(true,pl_3);
+		StopAnim3(true, pl_3);
 	}
 
 }

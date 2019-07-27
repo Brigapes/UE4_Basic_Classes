@@ -15,6 +15,9 @@ AAnimationController::AAnimationController()
 void AAnimationController::BeginPlay()
 {
 	Super::BeginPlay();
+	RecieveEvent("onload");
+	RecieveEvent("on_load");
+	RecieveEvent("load");
 	
 }
 
@@ -26,10 +29,30 @@ void AAnimationController::Tick(float DeltaTime)
 }
 
 
-void AAnimationController::RecieveEvent(FString event) {
+void AAnimationController::RecieveEvent(FString _event) {
 
 	for (auto& actor : AnimationActors) {
-		actor->processEvent(event);
+		actor->processEvent(_event);
+	}
+	//AActor* ad;
+	//if (ad->GetComponentByClass(<UAnimAdd*>)){
+//		ad->ProcessEvent(_event);
+//	}
+	
+
+	for (auto& actor : AnimationComponents) {
+		auto comps = actor->GetComponents();
+		for (auto& comp : comps) {
+			auto isClass = dynamic_cast<UAnimAdd*>(comp);
+
+			if (isClass) {
+				isClass->processEvent(_event);
+			}
+
+		}
+
+		
+		//actor->GetComponentByClass(<UAnimAdd*>)->processEvent(_event);
 	}
 
 
