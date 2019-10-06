@@ -70,3 +70,14 @@ void AAnimationController::RecieveEvent(FString _event) {
 
 
 }
+
+void AAnimationController::RecieveLightChangeComponent(AActor* lc) {
+	if (lc) {
+	//	if (lc->GetOwner()) {
+			LightActorComponents.Push(lc);
+	//	}
+	//	else {//TODO log error
+			//UELOG()
+	//	}
+	}
+}

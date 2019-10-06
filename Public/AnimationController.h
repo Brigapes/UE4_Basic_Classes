@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "AnimationActor.h"
 #include "AnimAdd.h"
+#include "LightChanger.h"
 
 #include "AnimationController.generated.h"
 
@@ -31,6 +32,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Animation Actors")
 		TArray<AActor*> AnimationComponents = {};
+	UPROPERTY(EditAnywhere, Category = "Animation Actors")
+		TArray<AActor*> LightActorComponents = {};
 		//TArray<UAnimAdd*> AnimationComponents = {};
 	UPROPERTY(EditAnywhere, Category = "Animation Actors")
 		TArray<AAnimationActor*> AnimationActors = {};
@@ -50,5 +53,5 @@ public:
 		FString EventToUnlockLock3 = "";
 	bool lock3 = false;
 
-
+	void RecieveLightChangeComponent(AActor*);
 };
