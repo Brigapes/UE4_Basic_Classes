@@ -20,12 +20,12 @@ class PLAYABLEDEMO_API UColorChanger : public USpotLightComponent
 
 
 	UPROPERTY(EditAnywhere, Category = "Custom Setup")
-	AAnimationController* ControllerToSendAndReecieve = nullptr;
+	AAnimationController* ControllerToSendAndRecieve = nullptr;
 
 	UPROPERTY(EditAnywhere, Category = "Custom Setup")
 
 
-		AActor* owner = nullptr;
+	AActor* owner = nullptr;
 
 	UColorChanger();
 	~UColorChanger();

@@ -68,6 +68,22 @@ void AAnimationController::RecieveEvent(FString _event) {
 		//actor->GetComponentByClass(<UAnimAdd*>)->processEvent(_event);
 	}
 
+	for (auto& actor : LightActorComponents) {
+		if (actor) {
+			auto comps = actor->GetComponents();
+			for (auto& comp : comps) {
+				auto isClass = dynamic_cast<ULightChanger*>(comp);
+
+				if (isClass) {
+					isClass->ProcessEvent(_event);
+				}
+
+			}
+
+		}
+		//actor->GetComponentByClass(<UAnimAdd*>)->processEvent(_event);
+	}
+
 
 }
 

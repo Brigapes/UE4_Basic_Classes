@@ -27,7 +27,10 @@ void ULightChanger::BeginPlay()
 	}
 	else {
 		//TODO log error
+		UE_LOG(LogTemp, Error, TEXT("NO ANIMATION CONTROLLER TO RECIEVE EVENTS FROM"));
 	}
+
+	setColor(ToColor1);
 
 }
 
@@ -40,8 +43,53 @@ void ULightChanger::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	// ...
 }
 
-void ULightChanger::ProcessEvent(FString) {
+void ULightChanger::ProcessEvent(FString event) {
 
+	if (AnimationController == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("NO ANIMATION CONTROLLER TO RECIEVE EVENTS FROM"));
+		return;
+	}
+
+	if (ShouldLock1BeTrue) {
+		if (!AnimationController->lock1) {
+			return;
+		}
+	}
+	if (ShouldLock2BeTrue) {
+		if (!AnimationController->lock2) {
+			return;
+		}
+	}
+	if (ShouldLock3BeTrue) {
+		if (!AnimationController->lock3) {
+			return;
+		}
+	}
+
+	if (event == OnEvent1) {
+		setColor(ToColor1);
+	}
+	if (event == OnEvent2) {
+		setColor(ToColor2);
+	}
+	if (event == OnEvent3) {
+		setColor(ToColor3);
+	}
 
 }
 
+void ULightChanger::setColor(FColor color) {
+
+	auto light = dynamic_cast<ULightComponent*>(this->GetOwner()->GetRootComponent());
+	if (!light) { UE_LOG(LogTemp, Error, TEXT("NO SPOTLIGHT COMPONENT!!")); return; }
+
+	else {
+
+		//light->get
+		//light->SetLightColor(color);
+		light->SetBloomTint(color);
+		//light->SetBloomThreshold
+		light->SetIntensity(0);
+	}
+
+}
