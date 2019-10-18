@@ -87,9 +87,10 @@ void ULightChanger::setColor(FColor color) {
 
 		//light->get
 		//light->SetLightColor(color);
-		light->SetBloomTint(color);
+	//	light->SetBloomTint(color);
 		//light->SetBloomThreshold
-		light->SetIntensity(0);
+	//	light->SetIntensity(0);
+		light->SetLightColor(color);
 	}
 
 }
