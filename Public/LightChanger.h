@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Components/SpotLightComponent.h"
-#include "SingleColorEvent.h"
 #include "AnimationController.h"
 #include "LightChanger.generated.h"
 
