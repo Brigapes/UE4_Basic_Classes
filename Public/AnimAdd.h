@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Components/SceneComponent.h"
 #include "AnimAdd.generated.h"
 
 
@@ -17,7 +17,7 @@ class AAnimationController;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class PLAYABLEDEMO_API UAnimAdd : public UActorComponent
+class PLAYABLEDEMO_API UAnimAdd : public USceneComponent
 {
 	GENERATED_BODY()
 
