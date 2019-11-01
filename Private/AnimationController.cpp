@@ -97,3 +97,13 @@ void AAnimationController::RecieveLightChangeComponent(AActor* lc) {
 	//	}
 	}
 }
+
+void  AAnimationController::RecieveAnimAddComponentOnLoad(AActor* obj) {
+	//first check if you don't already have it!
+	if (!obj) { return; } //TODO log error
+	for (auto& exi : AnimationComponents) {
+		if (exi == obj) { return; }
+	}
+
+	AnimationComponents.Push(obj);
+}

@@ -27,6 +27,10 @@ void UAnimAdd::BeginPlay()
 	RegisterComponent();
 	// ...
 	
+	if (AnimationController) {
+		AnimationController->RecieveAnimAddComponentOnLoad(this->GetOwner());
+	}
+
 }
 
 
@@ -351,42 +355,83 @@ void UAnimAdd::StartAnim1() {
 	}
 	double atime = AnimationTime1;
 	if (atime == 0) { atime = 1; }
+
+	/*if (UseRelative) {
+		if (MoveLocation1) {
+			double diff = 0.0f;
+
+
+		}
+	}
+	else {*/
 	if (MoveLocation1) {
 		double diff = 0.0f;
-		diff = ToTransform1.GetLocation().X - crr.GetLocation().X;
-		//if (diff < 0) { diff = diff * (-1); }
-		MovePerStep1.X = diff / atime;
-		diff = ToTransform1.GetLocation().Y - crr.GetLocation().Y;
-		//if (diff < 0) { diff = diff * (-1); }
-		MovePerStep1.Y = diff / atime;
-		diff = ToTransform1.GetLocation().Z - crr.GetLocation().Z;
-		//if (diff < 0) { diff = diff * (-1); }
-		MovePerStep1.Z = diff / atime;
+		if (UseRelativeTransform1) {
+			diff = (crr.GetLocation().X + ToTransform1.GetLocation().X) - crr.GetLocation().X;
+			MovePerStep1.X = diff / atime;
+			diff = (crr.GetLocation().Y + ToTransform1.GetLocation().Y) - crr.GetLocation().Y;
+			MovePerStep1.Y = diff / atime;
+			diff = (crr.GetLocation().Z + ToTransform1.GetLocation().Z) - crr.GetLocation().Z;
+			MovePerStep1.Z = diff / atime;
+		}
+		else {
+			diff = ToTransform1.GetLocation().X - crr.GetLocation().X;
+			MovePerStep1.X = diff / atime;
+			diff = ToTransform1.GetLocation().Y - crr.GetLocation().Y;
+			MovePerStep1.Y = diff / atime;
+			diff = ToTransform1.GetLocation().Z - crr.GetLocation().Z;
+			MovePerStep1.Z = diff / atime;
+		}
 	}
 	if (Rotate1) {
 		double diff = 0.0f;
-		diff = ToTransform1.GetRotation().Rotator().Roll - crr.GetRotation().Rotator().Roll;
-		//if (diff < 0) { diff = diff * (-1); }
-		RotatePerStep1.Roll = diff / atime;
-		diff = ToTransform1.GetRotation().Rotator().Yaw - crr.GetRotation().Rotator().Yaw;
-		//if (diff < 0) { diff = diff * (-1); }
-		RotatePerStep1.Yaw = diff / atime;
-		diff = ToTransform1.GetRotation().Rotator().Pitch - crr.GetRotation().Rotator().Pitch;
-		//if (diff < 0) { diff = diff * (-1); }
-		RotatePerStep1.Pitch = diff / atime;
+		if (UseRelativeTransform1) {
+			diff = (crr.GetRotation().Rotator().Roll + ToTransform1.GetRotation().Rotator().Roll)
+				- crr.GetRotation().Rotator().Roll;
+			RotatePerStep1.Roll = diff / atime;
+			diff = (crr.GetRotation().Rotator().Yaw + ToTransform1.GetRotation().Rotator().Yaw)
+				- crr.GetRotation().Rotator().Yaw;
+			RotatePerStep1.Yaw = diff / atime;
+			diff = (crr.GetRotation().Rotator().Pitch + ToTransform1.GetRotation().Rotator().Pitch)
+				- crr.GetRotation().Rotator().Pitch;
+			RotatePerStep1.Pitch = diff / atime;
+		}
+		else {
+			diff = ToTransform1.GetRotation().Rotator().Roll - crr.GetRotation().Rotator().Roll;
+			//if (diff < 0) { diff = diff * (-1); }
+			RotatePerStep1.Roll = diff / atime;
+			diff = ToTransform1.GetRotation().Rotator().Yaw - crr.GetRotation().Rotator().Yaw;
+			//if (diff < 0) { diff = diff * (-1); }
+			RotatePerStep1.Yaw = diff / atime;
+			diff = ToTransform1.GetRotation().Rotator().Pitch - crr.GetRotation().Rotator().Pitch;
+			//if (diff < 0) { diff = diff * (-1); }
+			RotatePerStep1.Pitch = diff / atime;
+		}
 	}
 	if (Scale1) {
 		double diff = 0.0f;
-		diff = ToTransform1.GetScale3D().X - crr.GetScale3D().X;
-		//if (diff < 0) { diff = diff * (-1); }
-		ScalePerStep1.X = diff / atime;
-		diff = ToTransform1.GetScale3D().Y - crr.GetScale3D().Y;
-		//if (diff < 0) { diff = diff * (-1); }
-		ScalePerStep1.Y = diff / atime;
-		diff = ToTransform1.GetScale3D().Z - crr.GetScale3D().Z;
-		//if (diff < 0) { diff = diff * (-1); }
-		ScalePerStep1.Z = diff / atime;
+		if (UseRelativeTransform1) {
+			diff = (crr.GetScale3D().X + ToTransform1.GetScale3D().X) - crr.GetScale3D().X;
+			ScalePerStep1.X = diff / atime;
+			diff = (crr.GetScale3D().Y + ToTransform1.GetScale3D().Y) - crr.GetScale3D().Y;
+			ScalePerStep1.Y = diff / atime;
+			diff = (crr.GetScale3D().Z + ToTransform1.GetScale3D().Z) - crr.GetScale3D().Z;
+			ScalePerStep1.Z = diff / atime;
+		}
+		else {
+			diff = ToTransform1.GetScale3D().X - crr.GetScale3D().X;
+			//if (diff < 0) { diff = diff * (-1); }
+			ScalePerStep1.X = diff / atime;
+			diff = ToTransform1.GetScale3D().Y - crr.GetScale3D().Y;
+			//if (diff < 0) { diff = diff * (-1); }
+			ScalePerStep1.Y = diff / atime;
+			diff = ToTransform1.GetScale3D().Z - crr.GetScale3D().Z;
+			//if (diff < 0) { diff = diff * (-1); }
+			ScalePerStep1.Z = diff / atime;
+		}
 	}
+	//}
+
 	if (StopRunningAnimsOnNewStart) {
 		StopAllAnims();
 	}
@@ -403,39 +448,69 @@ void UAnimAdd::StartAnim2() {
 	if (atime == 0) { atime = 1; }
 	if (MoveLocation2) {
 		double diff = 0.0f;
-		diff = ToTransform2.GetLocation().X - crr.GetLocation().X;
-		//if (diff < 0) { diff = diff * (-2); }
-		MovePerStep2.X = diff / atime;
-		diff = ToTransform2.GetLocation().Y - crr.GetLocation().Y;
-		//if (diff < 0) { diff = diff * (-2); }
-		MovePerStep2.Y = diff / atime;
-		diff = ToTransform2.GetLocation().Z - crr.GetLocation().Z;
-		//if (diff < 0) { diff = diff * (-2); }
-		MovePerStep2.Z = diff / atime;
+		if (UseRelativeTransform2) {
+			diff = (crr.GetLocation().X + ToTransform2.GetLocation().X) - crr.GetLocation().X;
+			MovePerStep2.X = diff / atime;
+			diff = (crr.GetLocation().Y + ToTransform2.GetLocation().Y) - crr.GetLocation().Y;
+			MovePerStep2.Y = diff / atime;
+			diff = (crr.GetLocation().Z + ToTransform2.GetLocation().Z) - crr.GetLocation().Z;
+			MovePerStep2.Z = diff / atime;
+		}
+		else {
+			diff = ToTransform2.GetLocation().X - crr.GetLocation().X;
+			MovePerStep2.X = diff / atime;
+			diff = ToTransform2.GetLocation().Y - crr.GetLocation().Y;
+			MovePerStep2.Y = diff / atime;
+			diff = ToTransform2.GetLocation().Z - crr.GetLocation().Z;
+			MovePerStep2.Z = diff / atime;
+		}
 	}
 	if (Rotate2) {
 		double diff = 0.0f;
-		diff = ToTransform2.GetRotation().Rotator().Roll - crr.GetRotation().Rotator().Roll;
-		//if (diff < 0) { diff = diff * (-2); }
-		RotatePerStep2.Roll = diff / atime;
-		diff = ToTransform2.GetRotation().Rotator().Yaw - crr.GetRotation().Rotator().Yaw;
-		//if (diff < 0) { diff = diff * (-2); }
-		RotatePerStep2.Yaw = diff / atime;
-		diff = ToTransform2.GetRotation().Rotator().Pitch - crr.GetRotation().Rotator().Pitch;
-		//if (diff < 0) { diff = diff * (-2); }
-		RotatePerStep2.Pitch = diff / atime;
+		if (UseRelativeTransform2) {
+			diff = (crr.GetRotation().Rotator().Roll + ToTransform2.GetRotation().Rotator().Roll)
+				- crr.GetRotation().Rotator().Roll;
+			RotatePerStep2.Roll = diff / atime;
+			diff = (crr.GetRotation().Rotator().Yaw + ToTransform2.GetRotation().Rotator().Yaw)
+				- crr.GetRotation().Rotator().Yaw;
+			RotatePerStep2.Yaw = diff / atime;
+			diff = (crr.GetRotation().Rotator().Pitch + ToTransform2.GetRotation().Rotator().Pitch)
+				- crr.GetRotation().Rotator().Pitch;
+			RotatePerStep2.Pitch = diff / atime;
+		}
+		else {
+			diff = ToTransform2.GetRotation().Rotator().Roll - crr.GetRotation().Rotator().Roll;
+			//if (diff < 0) { diff = diff * (-2); }
+			RotatePerStep2.Roll = diff / atime;
+			diff = ToTransform2.GetRotation().Rotator().Yaw - crr.GetRotation().Rotator().Yaw;
+			//if (diff < 0) { diff = diff * (-2); }
+			RotatePerStep2.Yaw = diff / atime;
+			diff = ToTransform2.GetRotation().Rotator().Pitch - crr.GetRotation().Rotator().Pitch;
+			//if (diff < 0) { diff = diff * (-2); }
+			RotatePerStep2.Pitch = diff / atime;
+		}
 	}
 	if (Scale2) {
 		double diff = 0.0f;
-		diff = ToTransform2.GetScale3D().X - crr.GetScale3D().X;
-		//if (diff < 0) { diff = diff * (-2); }
-		ScalePerStep2.X = diff / atime;
-		diff = ToTransform2.GetScale3D().Y - crr.GetScale3D().Y;
-		//if (diff < 0) { diff = diff * (-2); }
-		ScalePerStep2.Y = diff / atime;
-		diff = ToTransform2.GetScale3D().Z - crr.GetScale3D().Z;
-		//if (diff < 0) { diff = diff * (-2); }
-		ScalePerStep2.Z = diff / atime;
+		if (UseRelativeTransform2) {
+			diff = (crr.GetScale3D().X + ToTransform2.GetScale3D().X) - crr.GetScale3D().X;
+			ScalePerStep2.X = diff / atime;
+			diff = (crr.GetScale3D().Y + ToTransform2.GetScale3D().Y) - crr.GetScale3D().Y;
+			ScalePerStep2.Y = diff / atime;
+			diff = (crr.GetScale3D().Z + ToTransform2.GetScale3D().Z) - crr.GetScale3D().Z;
+			ScalePerStep2.Z = diff / atime;
+		}
+		else {
+			diff = ToTransform2.GetScale3D().X - crr.GetScale3D().X;
+			//if (diff < 0) { diff = diff * (-2); }
+			ScalePerStep2.X = diff / atime;
+			diff = ToTransform2.GetScale3D().Y - crr.GetScale3D().Y;
+			//if (diff < 0) { diff = diff * (-2); }
+			ScalePerStep2.Y = diff / atime;
+			diff = ToTransform2.GetScale3D().Z - crr.GetScale3D().Z;
+			//if (diff < 0) { diff = diff * (-2); }
+			ScalePerStep2.Z = diff / atime;
+		}
 	}
 	if (StopRunningAnimsOnNewStart) {
 		StopAllAnims();
@@ -453,39 +528,69 @@ void UAnimAdd::StartAnim3() {
 	if (atime == 0) { atime = 1; }
 	if (MoveLocation3) {
 		double diff = 0.0f;
-		diff = ToTransform3.GetLocation().X - crr.GetLocation().X;
-		//if (diff < 0) { diff = diff * (-3); }
-		MovePerStep3.X = diff / atime;
-		diff = ToTransform3.GetLocation().Y - crr.GetLocation().Y;
-		//if (diff < 0) { diff = diff * (-3); }
-		MovePerStep3.Y = diff / atime;
-		diff = ToTransform3.GetLocation().Z - crr.GetLocation().Z;
-		//if (diff < 0) { diff = diff * (-3); }
-		MovePerStep3.Z = diff / atime;
+		if (UseRelativeTransform3) {
+			diff = (crr.GetLocation().X + ToTransform3.GetLocation().X) - crr.GetLocation().X;
+			MovePerStep3.X = diff / atime;
+			diff = (crr.GetLocation().Y + ToTransform3.GetLocation().Y) - crr.GetLocation().Y;
+			MovePerStep3.Y = diff / atime;
+			diff = (crr.GetLocation().Z + ToTransform3.GetLocation().Z) - crr.GetLocation().Z;
+			MovePerStep3.Z = diff / atime;
+		}
+		else {
+			diff = ToTransform3.GetLocation().X - crr.GetLocation().X;
+			MovePerStep3.X = diff / atime;
+			diff = ToTransform3.GetLocation().Y - crr.GetLocation().Y;
+			MovePerStep3.Y = diff / atime;
+			diff = ToTransform3.GetLocation().Z - crr.GetLocation().Z;
+			MovePerStep3.Z = diff / atime;
+		}
 	}
 	if (Rotate3) {
 		double diff = 0.0f;
-		diff = ToTransform3.GetRotation().Rotator().Roll - crr.GetRotation().Rotator().Roll;
-		//if (diff < 0) { diff = diff * (-3); }
-		RotatePerStep3.Roll = diff / atime;
-		diff = ToTransform3.GetRotation().Rotator().Yaw - crr.GetRotation().Rotator().Yaw;
-		//if (diff < 0) { diff = diff * (-3); }
-		RotatePerStep3.Yaw = diff / atime;
-		diff = ToTransform3.GetRotation().Rotator().Pitch - crr.GetRotation().Rotator().Pitch;
-		//if (diff < 0) { diff = diff * (-3); }
-		RotatePerStep3.Pitch = diff / atime;
+		if (UseRelativeTransform3) {
+			diff = (crr.GetRotation().Rotator().Roll + ToTransform3.GetRotation().Rotator().Roll)
+				- crr.GetRotation().Rotator().Roll;
+			RotatePerStep3.Roll = diff / atime;
+			diff = (crr.GetRotation().Rotator().Yaw + ToTransform3.GetRotation().Rotator().Yaw)
+				- crr.GetRotation().Rotator().Yaw;
+			RotatePerStep3.Yaw = diff / atime;
+			diff = (crr.GetRotation().Rotator().Pitch + ToTransform3.GetRotation().Rotator().Pitch)
+				- crr.GetRotation().Rotator().Pitch;
+			RotatePerStep3.Pitch = diff / atime;
+		}
+		else {
+			diff = ToTransform3.GetRotation().Rotator().Roll - crr.GetRotation().Rotator().Roll;
+			//if (diff < 0) { diff = diff * (-3); }
+			RotatePerStep3.Roll = diff / atime;
+			diff = ToTransform3.GetRotation().Rotator().Yaw - crr.GetRotation().Rotator().Yaw;
+			//if (diff < 0) { diff = diff * (-3); }
+			RotatePerStep3.Yaw = diff / atime;
+			diff = ToTransform3.GetRotation().Rotator().Pitch - crr.GetRotation().Rotator().Pitch;
+			//if (diff < 0) { diff = diff * (-3); }
+			RotatePerStep3.Pitch = diff / atime;
+		}
 	}
 	if (Scale3) {
 		double diff = 0.0f;
-		diff = ToTransform3.GetScale3D().X - crr.GetScale3D().X;
-		//if (diff < 0) { diff = diff * (-3); }
-		ScalePerStep3.X = diff / atime;
-		diff = ToTransform3.GetScale3D().Y - crr.GetScale3D().Y;
-		//if (diff < 0) { diff = diff * (-3); }
-		ScalePerStep3.Y = diff / atime;
-		diff = ToTransform3.GetScale3D().Z - crr.GetScale3D().Z;
-		//if (diff < 0) { diff = diff * (-3); }
-		ScalePerStep3.Z = diff / atime;
+		if (UseRelativeTransform3) {
+			diff = (crr.GetScale3D().X + ToTransform3.GetScale3D().X) - crr.GetScale3D().X;
+			ScalePerStep3.X = diff / atime;
+			diff = (crr.GetScale3D().Y + ToTransform3.GetScale3D().Y) - crr.GetScale3D().Y;
+			ScalePerStep3.Y = diff / atime;
+			diff = (crr.GetScale3D().Z + ToTransform3.GetScale3D().Z) - crr.GetScale3D().Z;
+			ScalePerStep3.Z = diff / atime;
+		}
+		else {
+			diff = ToTransform3.GetScale3D().X - crr.GetScale3D().X;
+			//if (diff < 0) { diff = diff * (-3); }
+			ScalePerStep3.X = diff / atime;
+			diff = ToTransform3.GetScale3D().Y - crr.GetScale3D().Y;
+			//if (diff < 0) { diff = diff * (-3); }
+			ScalePerStep3.Y = diff / atime;
+			diff = ToTransform3.GetScale3D().Z - crr.GetScale3D().Z;
+			//if (diff < 0) { diff = diff * (-3); }
+			ScalePerStep3.Z = diff / atime;
+		}
 	}
 	if (StopRunningAnimsOnNewStart) {
 		StopAllAnims();

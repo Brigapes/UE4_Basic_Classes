@@ -54,4 +54,6 @@ public:
 	bool lock3 = false;
 
 	void RecieveLightChangeComponent(AActor*);
+
+	void RecieveAnimAddComponentOnLoad(AActor*);
 };

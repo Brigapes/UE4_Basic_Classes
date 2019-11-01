@@ -43,6 +43,7 @@ public:
 		AAnimationController* AnimationController;
 	UPROPERTY(EditAnywhere, Category = "Animation General")
 		bool ForceFinishPosition = false;
+
 	///UPROPERTY(EditAnywhere, Category = "Animation General")
 		AActor* PassAnimToActor = nullptr;
 
@@ -63,6 +64,8 @@ public:
 	///animation time in frames
 	UPROPERTY(EditAnywhere, Category = "Animation 1")
 		int32 AnimationTime1 = 0;
+	UPROPERTY(EditAnywhere, Category = "Animation 1")
+		bool UseRelativeTransform1 = true;
 	UPROPERTY(EditAnywhere, Category = "Animation 1")
 		bool MoveLocation1 = false;
 	UPROPERTY(EditAnywhere, Category = "Animation 1")
@@ -86,6 +89,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Animation 2")
 		int32 AnimationTime2 = 0;
 	UPROPERTY(EditAnywhere, Category = "Animation 2")
+		bool UseRelativeTransform2 = true;
+	UPROPERTY(EditAnywhere, Category = "Animation 2")
 		bool MoveLocation2 = false;
 	UPROPERTY(EditAnywhere, Category = "Animation 2")
 		bool Rotate2 = false;
@@ -106,6 +111,8 @@ public:
 		TArray<FString> AnimateOnEvent3 = {};
 	UPROPERTY(EditAnywhere, Category = "Animation 3")
 		int32 AnimationTime3 = 0;
+	UPROPERTY(EditAnywhere, Category = "Animation 3")
+		bool UseRelativeTransform3 = true;
 	UPROPERTY(EditAnywhere, Category = "Animation 3")
 		bool MoveLocation3 = false;
 	UPROPERTY(EditAnywhere, Category = "Animation 3")
