@@ -5,8 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "AnimationActor.h"
-#include "AnimAdd.h"
-#include "LightChanger.h"
+//#include "AnimAdd.h"
+//#include "LightChanger.h"
 
 #include "AnimationController.generated.h"
 

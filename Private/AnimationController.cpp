@@ -2,6 +2,8 @@
 
 
 #include "AnimationController.h"
+#include "AnimAdd.h"
+#include "LightChanger.h"
 
 // Sets default values
 AAnimationController::AAnimationController()
@@ -35,7 +37,7 @@ void AAnimationController::RecieveEvent(FString _event) {
 	}if (_event == EventToUnlockLock2) {
 		lock2 = true;
 	}
-	if (_event == EventToUnlockLock1) {
+	if (_event == EventToUnlockLock3) {
 		lock3 = true;
 	}
 
