@@ -10,6 +10,11 @@
 
 #include "AnimationController.generated.h"
 
+class ULightChanger;
+class UAnimAdd;
+class ANoteCam;
+class UCameraComponent;
+
 
 UCLASS()
 class PLAYABLEDEMO_API AAnimationController : public AActor
@@ -29,6 +34,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void RecieveEvent(FString event);
+	void RecieveEvent(FString _event, ULightChanger* ptr);
+	void RecieveEvent(FString _event, UAnimAdd* ptr);
 
 	UPROPERTY(EditAnywhere, Category = "Animation Actors")
 		TArray<AActor*> AnimationComponents = {};
@@ -38,6 +45,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Animation Actors")
 		TArray<AAnimationActor*> AnimationActors = {};
 
+	
 	
 	//UPROPERTY(EditAnywhere, Category = "Lock 1")
 	//	bool ShouldLock1BeTrue = false;
@@ -56,4 +64,9 @@ public:
 	void RecieveLightChangeComponent(AActor*);
 
 	void RecieveAnimAddComponentOnLoad(AActor*);
+//	void RecieveAnimAddComponentOnLoad(UObject*);
+
+	void RecieveNoteCam(ANoteCam*);
+	TArray<ANoteCam*> AllNoteCams = {};
+	UCameraComponent* DefCam = nullptr;
 };

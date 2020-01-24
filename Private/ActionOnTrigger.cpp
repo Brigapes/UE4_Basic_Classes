@@ -29,6 +29,11 @@ void AActionOnTrigger::BeginPlay() {
 	if (SeeBoundBox) {
 		DrawDebugBox(GetWorld(), GetActorLocation(), GetComponentsBoundingBox().GetExtent(), FColor::Purple, true, -1, 0, 5);
 	}
+
+	if (ActorToTriggerOn == nullptr) {
+		ActorToTriggerOn = dynamic_cast<AActor*>(GetWorld()->GetFirstPlayerController());
+	}
+
 }
 
 void AActionOnTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor)

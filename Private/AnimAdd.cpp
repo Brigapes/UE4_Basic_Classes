@@ -4,6 +4,7 @@
 #include "AnimAdd.h"
 #include "AnimationController.h"
 
+
 // Sets default values for this component's properties
 UAnimAdd::UAnimAdd()
 {
@@ -26,9 +27,27 @@ void UAnimAdd::BeginPlay()
 	PassAnimToActor = this->GetOwner();
 	RegisterComponent();
 	// ...
-	
+	if (PassToComponentName != "") {
+		auto comps = this->GetOwner()->GetComponents();
+		for (auto& comp : comps) {
+			///auto isClass = dynamic_cast<ULightChanger*>(comp);
+			if (comp->GetName() == PassToComponentName) {
+				auto object = dynamic_cast<UObject*>(comp);
+				if (object) {
+					auto klas = object->GetClass();
+					UStaticMeshComponent* mesh = dynamic_cast<UStaticMeshComponent*>(klas);
+					
+				//	this->animObject = object;
+				//	PassAnimToObject = true;
+				}
+				//if (actor) {
+				//	PassAnimToActor = actor;
+				//}
+			}
+		}
+	}
 	if (AnimationController) {
-		AnimationController->RecieveAnimAddComponentOnLoad(this->GetOwner());
+		AnimationController->RecieveAnimAddComponentOnLoad(PassAnimToActor);
 	}
 
 }
@@ -53,6 +72,8 @@ void UAnimAdd::ProcessAnims() {
 	FTransform crr = this->PassAnimToActor->GetTransform();
 	FTransform newt = this->PassAnimToActor->GetTransform();
 
+
+
 	if (PassAnimToActor) {
 		crr = PassAnimToActor->GetTransform();
 		newt = PassAnimToActor->GetTransform();
@@ -61,6 +82,12 @@ void UAnimAdd::ProcessAnims() {
 		crr = this->PassAnimToActor->GetTransform();
 		newt = this->PassAnimToActor->GetTransform();
 	}
+
+	/*if (PassAnimToObject) {
+		if (animObject) {
+			crr = animObject->getTr
+		}
+	}*/
 
 
 	//staret anim1

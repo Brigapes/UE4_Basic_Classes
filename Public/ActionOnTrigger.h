@@ -48,6 +48,8 @@ public:
 		FString EventNameForTrigger = "";
 	UPROPERTY(EditAnywhere, Category = "Custom setup")
 		FString EventNameForLeave = "";
+	UPROPERTY(EditAnywhere, Category = "Custom setup")
+		bool ForceDefaultCameraOnLeave = false;
 
 ///	UPROPERTY(EditAnywhere, Category = "Custom setup")
 ///		TArray<AActor*> AnimationActors = {};

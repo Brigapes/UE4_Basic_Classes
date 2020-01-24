@@ -43,6 +43,8 @@ public:
 		AAnimationController* AnimationController;
 	UPROPERTY(EditAnywhere, Category = "Animation General")
 		bool ForceFinishPosition = false;
+	UPROPERTY(EditAnywhere, Category = "Animation General")
+		FString PassToComponentName = "";
 
 	///UPROPERTY(EditAnywhere, Category = "Animation General")
 		AActor* PassAnimToActor = nullptr;
@@ -166,4 +168,7 @@ public:
 	int32 totalSteps1 = -1;
 	int32 totalSteps2 = -1;
 	int32 totalSteps3 = -1;
+
+	bool PassAnimToObject = false;
+	UObject* animObject = nullptr;
 };
