@@ -49,16 +49,18 @@ public:
 
 	
 
-	static void SetDefaultCamera(UCameraComponent*);
+	static void SetDefaultCamera(AActor*);
 	static void SetDefaultPlayerController(APlayerController*);
-	static UCameraComponent* GetDefaultCamera();
+	static AActor* GetDefaultCamera();
 
-	static void SwitchToCamera(ANoteCam * cam);
+	static void SwitchToCamera(ANoteCam * cam, float);
 	static void SwitchToCamera(AActor * cam);
+	static void SwitchToCameraCut(AActor * cam);
 
+	static float TimeToActorCam;// = 0.0f;
 
 protected:
-	static UCameraComponent* DefaultCamera;
+	static AActor* DefaultCamera;
 	static APlayerController* OurPlayer;
 };
 

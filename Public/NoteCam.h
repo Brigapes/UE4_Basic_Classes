@@ -14,7 +14,7 @@
 class AAnimationController;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class PLAYABLEDEMO_API ANoteCam : public AActor//ACameraActor
+class PLAYABLEDEMO_API ANoteCam : public ACameraActor
 {
 	GENERATED_BODY()
 	
@@ -37,6 +37,11 @@ public:
 		TArray<FString> SwitchToPlayerOnEvents = {};
 	UPROPERTY(EditAnywhere, Category = "Camera Switching")
 		AActor* TestActorOverride = nullptr;
+	UPROPERTY(EditAnywhere, Category = "Camera Switching")
+		float TimeToBlend = 0.0f;
+	UPROPERTY(EditAnywhere, Category = "Camera Switching")
+		float TimeToBlendBackToPlayer = 0.0f;
+
 
 
 	UPROPERTY(EditAnywhere, Category = "Locks")

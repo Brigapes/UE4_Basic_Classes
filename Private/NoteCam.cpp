@@ -58,11 +58,12 @@ void ANoteCam::ProcessEvent(FString _event)
 {
 	for (auto& evn : SwitchHereOnEvents) {
 		if (evn == _event) {
-			if (TestActorOverride) {
-				Global::SwitchToCamera(TestActorOverride);
-				return;
-			}
-			Global::SwitchToCamera(this);
+	//		if (TestActorOverride) {
+	//			Global::SwitchToCameraCut(TestActorOverride);
+	//			return;
+	//		}
+			Global::SwitchToCamera(this, TimeToBlend);
+			Global::TimeToActorCam = TimeToBlendBackToPlayer;
 			return;
 		}
 	}

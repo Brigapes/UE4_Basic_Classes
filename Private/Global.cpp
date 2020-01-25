@@ -14,8 +14,9 @@ Global::~Global()
 {
 }
 
-UCameraComponent* Global::DefaultCamera = nullptr;
+AActor* Global::DefaultCamera = nullptr;
 APlayerController* Global::OurPlayer = nullptr;
+float Global::TimeToActorCam = 0.0f;
 
 void Global::HandleInput(InputEvent inp) {
 
@@ -26,26 +27,27 @@ void Global::HandleInput(InputEvent inp) {
 	switch (inp) //switch input events
 	{
 	case Global::LClick:
-		break;
+		break;//no work
 	case Global::LClick_Pressed:
+		SwitchToCamera((ANoteCam*)nullptr);
 		break;
 	case Global::LClick_Released:
 		break;
 	case Global::RClick:
-		break;
+		break;//no work
 	case Global::RClick_Pressed:
 		break;
 	case Global::RClick_Released:
 		break;
 	case Global::None:
-		break;
+		break;//no?
 	default:
 		break;
 	}
 
 }
 
-void Global::SetDefaultCamera(UCameraComponent * cam)
+void Global::SetDefaultCamera(AActor * cam)
 {
 	if (cam) { DefaultCamera = cam; }
 }
@@ -63,7 +65,7 @@ void Global::SetDefaultPlayerController(APlayerController * player)
 	}
 }
 
-UCameraComponent * Global::GetDefaultCamera()
+AActor * Global::GetDefaultCamera()
 {
 	if (DefaultCamera) {
 		return DefaultCamera;
@@ -74,36 +76,16 @@ UCameraComponent * Global::GetDefaultCamera()
 }
 
 
-void Global::SwitchToCamera(ANoteCam* cam) {
+void Global::SwitchToCamera(ANoteCam* cam, float time) {
 	if (cam == nullptr) {
 		//means default camera
-
+		if (OurPlayer) {
+			OurPlayer->SetViewTargetWithBlend((GetDefaultCamera()), TimeToActorCam);
+		}
 	}
 	else {
-		
 		if (OurPlayer){
-			//if (CameraTwo && (OurPlayerController->GetViewTarget() == CameraOne))
-			//{
-				//Blend smoothly to camera two.
-
-		/*	UCameraComponent* ptr = nullptr;
-
-			auto comps = cam->GetComponents();
-			for (auto& comp : comps) {
-				auto isClass = dynamic_cast<UCameraComponent*>(comp);
-				if (isClass) {
-					ptr = isClass;
-				}
-			}
-			if (ptr) {
-				OurPlayer->SetViewTargetWithBlend(dynamic_cast<AActor*>(ptr), 0.75f);
-			}*/
-
-			OurPlayer->SetViewTargetWithBlend((cam), 0.75f);
-
-			
-
-
+			OurPlayer->SetViewTargetWithBlend((cam), time);
 		}
 	}
 }
@@ -111,12 +93,29 @@ void Global::SwitchToCamera(ANoteCam* cam) {
 void Global::SwitchToCamera(AActor* actor) {
 	if (actor == nullptr) {
 		//means default camera
-
+		if (OurPlayer) {
+			OurPlayer->SetViewTargetWithBlend((GetDefaultCamera()), TimeToActorCam);
+		}
 	}
 	else {
 
 		if (OurPlayer) {
 			OurPlayer->SetViewTargetWithBlend((actor), 0.75f);
+		}
+	}
+}
+
+void Global::SwitchToCameraCut(AActor* actor) {
+	if (actor == nullptr) {
+		//means default camera
+		if (OurPlayer) {
+			OurPlayer->SetViewTargetWithBlend((OurPlayer), TimeToActorCam);
+		}
+	}
+	else {
+
+		if (OurPlayer) {
+			OurPlayer->SetViewTarget((actor));
 		}
 	}
 }

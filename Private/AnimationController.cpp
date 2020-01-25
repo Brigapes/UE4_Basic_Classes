@@ -24,9 +24,9 @@ void AAnimationController::BeginPlay()
 	Super::BeginPlay();
 
 	Global::SetDefaultPlayerController(GetWorld()->GetFirstPlayerController());
-	if (Global::GetDefaultCamera()) {
-		DefCam = Global::GetDefaultCamera();
-	}
+//	if (Global::GetDefaultCamera()) {
+//		DefCam = Global::GetDefaultCamera();
+//	}
 	
 	RecieveEvent("onload");
 	RecieveEvent("on_load");
