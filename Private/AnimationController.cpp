@@ -46,6 +46,16 @@ void AAnimationController::Tick(float DeltaTime)
 
 void AAnimationController::RecieveEvent(FString _event) {
 
+	if (_event == "") { return; }
+
+	if (_event == ExitEventName || _event == "exitthisbitch") {
+		GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+		return;
+		exit(0);
+		Global::ExitGame();
+		return;
+	}
+
 	if (_event == EventToUnlockLock1) {
 		lock1 = true;
 	}if (_event == EventToUnlockLock2) {

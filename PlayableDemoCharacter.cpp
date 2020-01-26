@@ -70,6 +70,18 @@ void APlayableDemoCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 	PlayerInputComponent->BindAction("RClick", IE_Pressed, this, &APlayableDemoCharacter::RPress);
 	PlayerInputComponent->BindAction("LClick", IE_Released, this, &APlayableDemoCharacter::LRelease);
 	PlayerInputComponent->BindAction("RClick", IE_Released, this, &APlayableDemoCharacter::RRelease);
+	PlayerInputComponent->BindAction("Escape", IE_Released, this, &APlayableDemoCharacter::Escape);
+	//nums
+	PlayerInputComponent->BindAction("num0", IE_Released, this, &APlayableDemoCharacter::Num0);
+	PlayerInputComponent->BindAction("num1", IE_Released, this, &APlayableDemoCharacter::Num1);
+	PlayerInputComponent->BindAction("num2", IE_Released, this, &APlayableDemoCharacter::Num2);
+	PlayerInputComponent->BindAction("num3", IE_Released, this, &APlayableDemoCharacter::Num3);
+	PlayerInputComponent->BindAction("num4", IE_Released, this, &APlayableDemoCharacter::Num4);
+	PlayerInputComponent->BindAction("num5", IE_Released, this, &APlayableDemoCharacter::Num5);
+	PlayerInputComponent->BindAction("num6", IE_Released, this, &APlayableDemoCharacter::Num6);
+	PlayerInputComponent->BindAction("num7", IE_Released, this, &APlayableDemoCharacter::Num7);
+	PlayerInputComponent->BindAction("num8", IE_Released, this, &APlayableDemoCharacter::Num8);
+	PlayerInputComponent->BindAction("num9", IE_Released, this, &APlayableDemoCharacter::Num9);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &APlayableDemoCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &APlayableDemoCharacter::MoveRight);
@@ -153,3 +165,15 @@ void APlayableDemoCharacter::LPress()  {	Global::HandleInput(Global::LClick_Pres
 void APlayableDemoCharacter::LRelease(){	Global::HandleInput(Global::LClick_Released);	}
 void APlayableDemoCharacter::RPress()  {	Global::HandleInput(Global::RClick_Pressed);	}
 void APlayableDemoCharacter::RRelease(){	Global::HandleInput(Global::RClick_Released);	}
+void APlayableDemoCharacter::Escape(){		Global::HandleInput(Global::Esc);	}
+//nums
+void APlayableDemoCharacter::Num0(){		Global::HandleInput(Global::N0);	}
+void APlayableDemoCharacter::Num1(){		Global::HandleInput(Global::N1);	}
+void APlayableDemoCharacter::Num2(){		Global::HandleInput(Global::N2);	}
+void APlayableDemoCharacter::Num3(){		Global::HandleInput(Global::N3);	}
+void APlayableDemoCharacter::Num4(){		Global::HandleInput(Global::N4);	}
+void APlayableDemoCharacter::Num5(){		Global::HandleInput(Global::N5);	}
+void APlayableDemoCharacter::Num6(){		Global::HandleInput(Global::N6);	}
+void APlayableDemoCharacter::Num7(){		Global::HandleInput(Global::N7);	}
+void APlayableDemoCharacter::Num8(){		Global::HandleInput(Global::N8);	}
+void APlayableDemoCharacter::Num9(){		Global::HandleInput(Global::N9);	}

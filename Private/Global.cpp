@@ -7,6 +7,7 @@
 
 Global::Global()
 {
+	Global::AllPuzzleTriggerboxes = {};
 	C_ASSERT("DON'T PLACE THIS IN THE GAME! WHAT'S WRONG WITH YOU???!!!");
 }
 
@@ -17,32 +18,37 @@ Global::~Global()
 AActor* Global::DefaultCamera = nullptr;
 APlayerController* Global::OurPlayer = nullptr;
 float Global::TimeToActorCam = 0.0f;
+TArray<AActionOnTrigger*> Global::AllPuzzleTriggerboxes = {};
 
 void Global::HandleInput(InputEvent inp) {
 
 	//here add if input can even go trough
 
-
+	
 
 	switch (inp) //switch input events
 	{
-	case Global::LClick:
-		break;//no work
-	case Global::LClick_Pressed:
-		SwitchToCamera((ANoteCam*)nullptr);
-		break;
-	case Global::LClick_Released:
-		break;
-	case Global::RClick:
-		break;//no work
-	case Global::RClick_Pressed:
-		break;
-	case Global::RClick_Released:
-		break;
-	case Global::None:
-		break;//no?
-	default:
-		break;
+		case Global::LClick:
+			break;//no work
+		case Global::LClick_Pressed:
+			SwitchToCamera((ANoteCam*)nullptr);
+			break;
+		case Global::LClick_Released:
+			break;
+		case Global::RClick:
+			break;//no work
+		case Global::RClick_Pressed:
+			break;
+		case Global::RClick_Released:
+			break;
+		case Global::Esc:
+			Global::ExitGame();
+			break;
+		case Global::None:
+			break;//no?
+		default:
+			Global::HandleNumInput(inp);
+			break;
 	}
 
 }
@@ -118,4 +124,34 @@ void Global::SwitchToCameraCut(AActor* actor) {
 			OurPlayer->SetViewTarget((actor));
 		}
 	}
+}
+
+void Global::ExitGame()
+{
+	//GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
+	exit(0);
+}
+
+void Global::HandleNumInput(Global::InputEvent inp) {
+	for (auto& tb : AllPuzzleTriggerboxes) {
+		FString input = "0";
+		if (inp == N1) { input = "1"; }
+		if (inp == N2) { input = "2"; }
+		if (inp == N3) { input = "3"; }
+		if (inp == N4) { input = "4"; }
+		if (inp == N5) { input = "5"; }
+		if (inp == N6) { input = "6"; }
+		if (inp == N7) { input = "7"; }
+		if (inp == N8) { input = "8"; }
+		if (inp == N9) { input = "9"; }
+		tb->PuzzleInput(input);
+	}
+}
+
+void Global::AddPuzzleTB(AActionOnTrigger* tb) {
+//	mutex.Lock();
+	if (tb) {
+		AllPuzzleTriggerboxes.Add(tb);
+	}
+//	mutex.Unlock();
 }

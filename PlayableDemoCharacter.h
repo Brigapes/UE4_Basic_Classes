@@ -72,6 +72,19 @@ protected:
 	void LRelease();
 	void RPress();
 	void RRelease();
+	void Escape();
+
+	//nums
+	void Num0();
+	void Num1();
+	void Num2();
+	void Num3();
+	void Num4();
+	void Num5();
+	void Num6();
+	void Num7();
+	void Num8();
+	void Num9();
 
 	// End of APawn interface
 

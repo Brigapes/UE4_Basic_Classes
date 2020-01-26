@@ -51,6 +51,18 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Custom setup")
 		bool ForceDefaultCameraOnLeave = false;
 
+
+	UPROPERTY(EditAnywhere, Category = "Puzzle")
+		bool IsAPuzzleTriggerBox = false;
+	UPROPERTY(EditAnywhere, Category = "Puzzle")
+		FString NumCompletionSequence = "";
+	UPROPERTY(EditAnywhere, Category = "Puzzle")
+		FString EventOnCompletion = "";
+	UPROPERTY(EditAnywhere, Category = "Puzzle")
+		TArray<AAnimationController*> SendToControllers = {};
+
+
+
 ///	UPROPERTY(EditAnywhere, Category = "Custom setup")
 ///		TArray<AActor*> AnimationActors = {};
 	///UPROPERTY(EditAnywhere)
@@ -63,8 +75,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		bool SeeBoundBox = false;
-
-
 
 //	UPROPERTY(EditAnywhere)
 //		FVector LocationToTeleportCurrentOffset = FVector(0, 0, 0);
@@ -121,7 +131,7 @@ public:
 		///void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 ///	UPROPERTY(EditAnywhere)
 ///		class AActor* SpecificActor;
-
+	
 	// overlap begin function
 	UFUNCTION()
 		void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
@@ -130,4 +140,16 @@ public:
 	UFUNCTION()
 		void OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor);
 
+	//puzzle
+	void PuzzleInput(FString);
+	void CheckIfSolved();
+	void SolvedPuzzle();
+
+
+
+	private:
+		bool IsInside = false;
+		bool IsPuzzleSolved = false;
+		FString fullinput = "";
+		
 };

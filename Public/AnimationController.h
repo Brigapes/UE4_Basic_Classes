@@ -61,6 +61,12 @@ public:
 		FString EventToUnlockLock3 = "";
 	bool lock3 = false;
 
+	UPROPERTY(EditAnywhere, Category = "Exit")
+		bool ExitUsingEscape = true;
+	UPROPERTY(EditAnywhere, Category = "Exit")
+		FString ExitEventName = "";
+
+
 	void RecieveLightChangeComponent(AActor*);
 
 	void RecieveAnimAddComponentOnLoad(AActor*);

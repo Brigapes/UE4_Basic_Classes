@@ -10,6 +10,8 @@
 
 #include "CoreMinimal.h"
 
+#include "GameFramework/Actor.h"
+
 #include "Components/ActorComponent.h"
 #include "Runtime/Engine/Classes/GameFramework/Character.h"
 #include "Engine/TriggerBox.h"
@@ -18,6 +20,7 @@
 #include "AnimationController.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/PlayerController.h"
+#include "ActionOnTrigger.h"
 
 /**
  * 
@@ -41,6 +44,17 @@ public:
 		RClick,
 		RClick_Pressed,
 		RClick_Released,
+		N0,
+		N1,
+		N2,
+		N3,
+		N4,
+		N5,
+		N6,
+		N7,
+		N8,
+		N9,
+		Esc,
 		None
 	};
 
@@ -59,9 +73,15 @@ public:
 
 	static float TimeToActorCam;// = 0.0f;
 
+	static void ExitGame();
+	static void AddPuzzleTB(AActionOnTrigger*);
+
 protected:
 	static AActor* DefaultCamera;
 	static APlayerController* OurPlayer;
+	static void HandleNumInput(Global::InputEvent);
+	//static FCriticalSection mutex;
+	static TArray<AActionOnTrigger*> AllPuzzleTriggerboxes;
 };
 
 

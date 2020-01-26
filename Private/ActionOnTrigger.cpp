@@ -2,6 +2,7 @@
 
 
 #include "ActionOnTrigger.h"
+#include "Global.h"
 
 // Fill out your copyright notice in the Description page of Project Settings.
 
@@ -15,7 +16,6 @@ AActionOnTrigger::AActionOnTrigger() {
 	this->OnActorBeginOverlap.AddDynamic(this, &AActionOnTrigger::OnOverlapBegin);
 	this->OnActorEndOverlap.AddDynamic(this, &AActionOnTrigger::OnOverlapEnd);
 
-
 	///this->OnActorBeginOverlap.AddDynamic(this, &AActionOnTrigger::BeginOverlap);
 	//Register Events
 	//OnActorBeginOverlap.AddDynamic(this, &AActionOnTrigger::OnOverlapBegin);
@@ -23,9 +23,7 @@ AActionOnTrigger::AActionOnTrigger() {
 }
 
 void AActionOnTrigger::BeginPlay() {
-
 	Super::BeginPlay();
-
 	if (SeeBoundBox) {
 		DrawDebugBox(GetWorld(), GetActorLocation(), GetComponentsBoundingBox().GetExtent(), FColor::Purple, true, -1, 0, 5);
 	}
@@ -34,6 +32,11 @@ void AActionOnTrigger::BeginPlay() {
 		ActorToTriggerOn = dynamic_cast<AActor*>(GetWorld()->GetFirstPlayerController());
 	}
 
+	if (IsAPuzzleTriggerBox) {
+		Global::AddPuzzleTB(this);
+	}
+
+
 }
 
 void AActionOnTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor)
@@ -41,6 +44,16 @@ void AActionOnTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AActo
 	//if the overlapping actor is the specific actor we identified in the editor
 	//if (OtherActor && (OtherActor != this) && OtherActor == SpecificActor)
 	//{
+	if (IsAPuzzleTriggerBox) {
+		if (OtherActor == ActorToTriggerOn) {
+			if (ActorToTriggerOn != nullptr) {
+				if (ActorToChange != nullptr) {
+					IsInside = true;
+				}
+			}
+		}
+	}
+	
 	if (OtherActor == ActorToTriggerOn) {
 		if (ActorToTriggerOn != nullptr){
 			if (ActorToChange != nullptr) {
@@ -54,24 +67,16 @@ void AActionOnTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AActo
 				if (ShowOnTrigger) {
 					ActorToChange->SetActorHiddenInGame(true);
 				}
-
 			}
-
 			if (AnimateActors) {
 				if (SendEventOnTrigger) {
 					if (AnimationControllerToSendEvents) {
 						AnimationControllerToSendEvents->RecieveEvent(EventNameForTrigger);
 					}
 				}
-
-
-
 			}
-
 		}
 	}
-
-
 	///print("Overlap Begin");
 	///printFString("Overlapping Actor = %s", *OtherActor->GetName());
 //}
@@ -79,6 +84,15 @@ void AActionOnTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AActo
 
 void AActionOnTrigger::OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor)
 {
+	if (IsAPuzzleTriggerBox) {
+		if (OtherActor == ActorToTriggerOn) {
+			if (ActorToTriggerOn != nullptr) {
+				if (ActorToChange != nullptr) {
+					IsInside = false;
+				}
+			}
+		}
+	}
 	if (OtherActor == ActorToTriggerOn) {
 		if (ActorToTriggerOn != nullptr && ActorToChange != nullptr) {
 
@@ -89,8 +103,6 @@ void AActionOnTrigger::OnOverlapEnd(class AActor* OverlappedActor, class AActor*
 				ActorToChange->SetActorHiddenInGame(true);
 			}
 
-
-			
 		}
 		if (AnimateActors) {
 			if (SendEventOnLeave) {
@@ -99,8 +111,25 @@ void AActionOnTrigger::OnOverlapEnd(class AActor* OverlappedActor, class AActor*
 				}
 			}
 		}
-
-
 	}
 }
 
+void AActionOnTrigger::PuzzleInput(FString inp) {
+	if (!IsAPuzzleTriggerBox) { return; }
+	fullinput + inp;
+	CheckIfSolved();
+}
+void AActionOnTrigger::CheckIfSolved() {
+
+	auto solved = fullinput.Find(NumCompletionSequence);
+	if (solved != -1) {
+		SolvedPuzzle();
+	}
+}
+
+void AActionOnTrigger::SolvedPuzzle() {
+	IsPuzzleSolved = true;
+	//send events!
+	//auto solved = fullinput.Find(NumCompletionSequence);
+
+}
