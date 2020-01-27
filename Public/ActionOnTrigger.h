@@ -50,10 +50,16 @@ public:
 		FString EventNameForLeave = "";
 	UPROPERTY(EditAnywhere, Category = "Custom setup")
 		bool ForceDefaultCameraOnLeave = false;
+	UPROPERTY(EditAnywhere, Category = "Custom setup")
+		float ForceCameraTime = 0.0f;
 
 
 	UPROPERTY(EditAnywhere, Category = "Puzzle")
 		bool IsAPuzzleTriggerBox = false;
+	UPROPERTY(EditAnywhere, Category = "Puzzle")
+		FString EventOnTriggerIfUnsolved = "";
+	UPROPERTY(EditAnywhere, Category = "Puzzle")
+		FString EventOnLeaveIfUnsolved = "";
 	UPROPERTY(EditAnywhere, Category = "Puzzle")
 		FString NumCompletionSequence = "";
 	UPROPERTY(EditAnywhere, Category = "Puzzle")

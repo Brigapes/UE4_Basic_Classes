@@ -75,6 +75,15 @@ void AActionOnTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AActo
 					}
 				}
 			}
+			if (IsAPuzzleTriggerBox) {
+				if (EventOnTriggerIfUnsolved != "") {
+					if (!IsPuzzleSolved) {
+						for (auto& ctrl : SendToControllers) {
+							ctrl->RecieveEvent(EventOnTriggerIfUnsolved);
+						}
+					}
+				}
+			}
 		}
 	}
 	///print("Overlap Begin");
@@ -89,6 +98,8 @@ void AActionOnTrigger::OnOverlapEnd(class AActor* OverlappedActor, class AActor*
 			if (ActorToTriggerOn != nullptr) {
 				if (ActorToChange != nullptr) {
 					IsInside = false;
+					//clear fullinput
+					fullinput = "";
 				}
 			}
 		}
@@ -111,12 +122,28 @@ void AActionOnTrigger::OnOverlapEnd(class AActor* OverlappedActor, class AActor*
 				}
 			}
 		}
+		if (IsAPuzzleTriggerBox) {
+			if (EventOnLeaveIfUnsolved != "") {
+				if (!IsPuzzleSolved) {
+					for (auto& ctrl : SendToControllers) {
+						ctrl->RecieveEvent(EventOnLeaveIfUnsolved);
+					}
+				}
+			}
+		}
+
+		if (ForceDefaultCameraOnLeave) {
+			Global::SwitchToCamera(nullptr, ForceCameraTime);
+		}
 	}
 }
 
 void AActionOnTrigger::PuzzleInput(FString inp) {
 	if (!IsAPuzzleTriggerBox) { return; }
-	fullinput + inp;
+	if (IsPuzzleSolved) {
+		return;
+	}
+	fullinput = fullinput + inp;
 	CheckIfSolved();
 }
 void AActionOnTrigger::CheckIfSolved() {
@@ -130,6 +157,10 @@ void AActionOnTrigger::CheckIfSolved() {
 void AActionOnTrigger::SolvedPuzzle() {
 	IsPuzzleSolved = true;
 	//send events!
-	//auto solved = fullinput.Find(NumCompletionSequence);
-
+	if (EventOnCompletion != "") {
+		for (auto& ctrl : SendToControllers) {
+			ctrl->RecieveEvent(EventOnCompletion);
+		}
+	}
+	
 }
