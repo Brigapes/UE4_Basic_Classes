@@ -46,6 +46,9 @@ void UAnimAdd::BeginPlay()
 			}
 		}
 	}
+
+	//this->GetOwner()->GetAttachParentActor
+
 	if (AnimationController) {
 		AnimationController->RecieveAnimAddComponentOnLoad(PassAnimToActor);
 	}
@@ -152,7 +155,15 @@ void UAnimAdd::ProcessAnims() {
 
 			//if all is valid apply transform
 			if (PassAnimToActor) {
-				PassAnimToActor->SetActorTransform(newt);
+				if (UseLocalLocation) {
+					//PassAnimToActor->SetActorRelativeTransform(newt);
+					if (PassAnimToActor->GetAttachParentActor()) {
+						PassAnimToActor->SetActorTransform(newt);//.GetRelativeTransform(PassAnimToActor->GetTransform()));//PassAnimToActor->GetAttachParentActor()->GetActorTransform()));
+					}
+				}
+				else {
+					PassAnimToActor->SetActorTransform(newt);
+				}
 			}
 			else this->PassAnimToActor->SetActorTransform(newt);
 
@@ -228,7 +239,15 @@ void UAnimAdd::ProcessAnims() {
 
 			//if all is valid apply transform
 			if (PassAnimToActor) {
-				PassAnimToActor->SetActorTransform(newt);
+				if (UseLocalLocation) {
+					//PassAnimToActor->SetActorRelativeTransform(newt);
+					if (PassAnimToActor->GetAttachParentActor()) {
+						PassAnimToActor->SetActorTransform(newt);//.GetRelativeTransform(PassAnimToActor->GetAttachParentActor()->GetActorTransform()));
+					}
+				}
+				else {
+					PassAnimToActor->SetActorTransform(newt);
+				}
 			}
 			else this->PassAnimToActor->SetActorTransform(newt);
 
@@ -304,7 +323,12 @@ void UAnimAdd::ProcessAnims() {
 
 			//if all is valid apply transform
 			if (PassAnimToActor) {
-				PassAnimToActor->SetActorTransform(newt);
+				if (UseLocalLocation) {
+					PassAnimToActor->SetActorTransform(newt);
+				}
+				else {
+					PassAnimToActor->SetActorTransform(newt);
+				}
 			}
 			else this->PassAnimToActor->SetActorTransform(newt);
 
@@ -320,16 +344,7 @@ void UAnimAdd::ProcessAnims() {
 	}
 	//end anim3
 
-
-
-
 	//all done
-
-
-
-
-
-
 
 	return;
 }
@@ -377,8 +392,16 @@ void UAnimAdd::StopAllAnims() {
 void UAnimAdd::StartAnim1() {
 	if (pl_1) { return; }
 	FTransform crr = this->PassAnimToActor->GetTransform();
+	if (UseLocalLocation) {
+		crr = this->PassAnimToActor->GetActorTransform();//GetRelativeTransform();
+	}
 	if (PassAnimToActor) {
 		crr = PassAnimToActor->GetTransform();
+		if (UseLocalLocation) {
+			if (PassAnimToActor->GetAttachParentActor()) {
+				crr = PassAnimToActor->GetActorTransform().GetRelativeTransform(PassAnimToActor->GetAttachParentActor()->GetActorTransform());// ->GetRelativeTransform();
+			}
+		}
 	}
 	double atime = AnimationTime1;
 	if (atime == 0) { atime = 1; }
@@ -470,6 +493,11 @@ void UAnimAdd::StartAnim2() {
 	FTransform crr = this->PassAnimToActor->GetTransform();
 	if (PassAnimToActor) {
 		crr = PassAnimToActor->GetTransform();
+		if (UseLocalLocation) {
+			if (PassAnimToActor->GetAttachParentActor()) {
+				crr = PassAnimToActor->GetActorTransform().GetRelativeTransform(PassAnimToActor->GetAttachParentActor()->GetActorTransform());// ->GetRelativeTransform();
+			}
+		}
 	}
 	double atime = AnimationTime2;
 	if (atime == 0) { atime = 1; }
@@ -550,6 +578,11 @@ void UAnimAdd::StartAnim3() {
 	FTransform crr = this->PassAnimToActor->GetTransform();
 	if (PassAnimToActor) {
 		crr = PassAnimToActor->GetTransform();
+		if (UseLocalLocation) {
+			if (PassAnimToActor->GetAttachParentActor()) {
+				crr = PassAnimToActor->GetActorTransform().GetRelativeTransform(PassAnimToActor->GetAttachParentActor()->GetActorTransform());// ->GetRelativeTransform();
+			}
+		}
 	}
 	double atime = AnimationTime3;
 	if (atime == 0) { atime = 1; }

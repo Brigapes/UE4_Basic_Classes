@@ -134,17 +134,19 @@ void Global::ExitGame()
 
 void Global::HandleNumInput(Global::InputEvent inp) {
 	for (auto& tb : AllPuzzleTriggerboxes) {
-		FString input = "0";
-		if (inp == N1) { input = "1"; }
-		if (inp == N2) { input = "2"; }
-		if (inp == N3) { input = "3"; }
-		if (inp == N4) { input = "4"; }
-		if (inp == N5) { input = "5"; }
-		if (inp == N6) { input = "6"; }
-		if (inp == N7) { input = "7"; }
-		if (inp == N8) { input = "8"; }
-		if (inp == N9) { input = "9"; }
-		tb->PuzzleInput(input);
+		if ((tb == tb) && (tb != nullptr)) {
+			FString input = "0";
+			if (inp == N1) { input = "1"; }
+			if (inp == N2) { input = "2"; }
+			if (inp == N3) { input = "3"; }
+			if (inp == N4) { input = "4"; }
+			if (inp == N5) { input = "5"; }
+			if (inp == N6) { input = "6"; }
+			if (inp == N7) { input = "7"; }
+			if (inp == N8) { input = "8"; }
+			if (inp == N9) { input = "9"; }
+			tb->PuzzleInput(input);
+		}
 	}
 }
 

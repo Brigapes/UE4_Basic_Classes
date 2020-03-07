@@ -45,6 +45,9 @@ public:
 		bool ForceFinishPosition = false;
 	UPROPERTY(EditAnywhere, Category = "Animation General")
 		FString PassToComponentName = "";
+	///THIS IS IF STATIC MESH IS PARENTED AND WORLD LOCATION IS NOT ACCOUNTED
+	UPROPERTY(EditAnywhere, Category = "Animation General")
+		bool UseLocalLocation = false;
 
 	///UPROPERTY(EditAnywhere, Category = "Animation General")
 		AActor* PassAnimToActor = nullptr;
